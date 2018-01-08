@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<package name="mypackage" namespace="/" extends="json-default">
+
+		<!-- 注册拦截器 -->
+		<interceptors>
+			<interceptor name="nologininterceptor"
+				class="cn.net.inlink.interceptor.NoLoginInterceptor">
+				<param name="name">未登录拦截器</param>
+			</interceptor>
+		</interceptors>
+
+		<!-- 显示登录页面 -->
+		<action name="loginpage" class="cn.net.inlink.controller.LoginPageAction"
+			method="login">
+			<result name="show login">/WEB-INF/jsp/login.jsp</result>
+		</action>
+
+		<!--登录控制 -->
+		<action name="loginvalidate" class="cn.net.inlink.controller.LoginAction">
+			<result name="login success" type="redirectAction">showHomePage</result>
+			<result name="login error">/WEB-INF/jsp/login.jsp</result>
+		</action>
+
+		<!-- 登出控制 -->
+		<action name="logout" class="cn.net.inlink.controller.LogoutAction">
+			<result name="logout success" type="redirectAction">loginpage</result>
+		</action>
+
+		<!-- 显示首页的控制 -->
+		<action name="showHomePage" class="cn.net.inlink.controller.ShowHomePageAction">
+
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="nologininterceptor" />
+
+			<result name="show homepage">/WEB-INF/jsp/homepage.jsp</result>
+			<result name="input" type="chain">loginpage</result>
+		</action>
+
+		<!-- 页面内容 -->
+		<action name="pagecontent" class="cn.net.inlink.controller.PageContentAction">
+			<result name="show pagecontent" type="json"></result>
+		</action>
+		
+		 <!-- 显示欢迎页面 -->
+		<action name="showWelcome" class="cn.net.inlink.controller.ShowWelcomeAction">
+		   <result name="show welcome">/WEB-INF/jsp/welcome.jsp</result>
+		</action>
+		
+		<!-- 显示单独录入页面 -->
+		<action name="showSingle" class="cn.net.inlink.controller.ShowSingleTypeinAction">
+		   <result name="show single">/jsp/singletypein.jsp</result>
+		</action>
+		
+		<!-- 显示单独录入页面 -->
+		<action name="showExcel" class="cn.net.inlink.controller.ShowExcelUploadAction">
+		   <result name="show excel">/jsp/excelupload.jsp</result>
+		</action>
+		
+		<!-- 修改密码 -->
+		<action name="editpass" class="cn.net.inlink.controller.ChangePasswordAction">
+			<result name="edit success" >/WEB-INF/jsp/login.jsp</result>
+			<result name="edit error">/WEB-INF/jsp/error.jsp</result>
+		</action>
+
+
+	</package>
+
+</struts>

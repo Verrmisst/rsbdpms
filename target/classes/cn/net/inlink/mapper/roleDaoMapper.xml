@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.net.inlink.dao.RoleDao">
+
+	<resultMap type="Role" id="roleResultMap">
+		<id property="id" column="role_fldid" />
+		<result property="roleName" column="role_fldname" />
+		<result property="description" column="role_flddes" />
+		<result property="order" column="role_fldorder" />
+
+		<collection property="functionList" ofType="cn.net.inlink.entity.Function">
+			<id property="id" column="func_fldid" />
+			<result property="funcName" column="func_fldname" />
+			<result property="url" column="func_fldurl" />
+
+			<collection property="funList" ofType="cn.net.inlink.entity.ChildFunction">
+					<id property="childId" column="childId" />
+					<result property="childFuncName" column="childFuncName" />
+					<result property="childUrl" column="childUrl" />
+			</collection>
+			
+		</collection>
+
+	</resultMap>
+
+	<select id="getFunctionByroleName" resultMap="roleResultMap">
+		<!-- select s1.func_fldid,s1.func_fldname,s1.func_fldurl,s1.func_fldparentid 
+			from sys_function s1,sys_role_vs_function s2,sys_role s3 where s1.func_fldid 
+			= s2.fld_func_id and s2.fld_role_id = s3.role_fldid and s3.role_fldname = 
+			#{param1} order by s1.func_fldorder -->
+		select
+		ss.func_fldid,ss.func_fldname,SS.func_fldurl,tt.func_fldid as childId,tt.func_fldname as childFuncName,tt.func_fldurl as childUrl
+		from (
+		select
+		s1.func_fldid,s1.func_fldname,s1.func_fldurl,s1.func_fldparentid
+		from
+		sys_function s1,sys_role_vs_function s2,sys_role s3
+		where s1.func_fldid
+		= s2.fld_func_id and s2.fld_role_id = s3.role_fldid and
+		s3.role_fldname = #{param1}
+		order by s1.func_fldorder) tt left join sys_function ss
+		on tt.func_fldparentid = ss.func_fldid
+	</select>
+
+	<select id="getAllRoles" resultMap="roleResultMap">
+		select * from sys_role
+	</select>
+
+</mapper> 

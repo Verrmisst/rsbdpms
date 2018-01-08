@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.net.inlink.dao.UserDao">
+
+	<resultMap type="User" id="userResultMap">
+		<id property="id" column="user_fldid" />
+		<result property="userName" column="user_fldcode" />
+		<result property="password" column="user_fldpass" />
+		<result property="description" column="user_fldname" />
+	</resultMap>
+
+	<resultMap type="User" id="roleResultMap">
+		<id property="id" column="fldid" />
+		<result property="userName" column="fldcode" />
+		<result property="password" column="fldpass" />
+		<result property="description" column="fldname" />
+
+		<collection property="roleList" ofType="cn.net.inlink.entity.Role">
+			<id property="id" column="role_fldid" />
+			<result property="roleName" column="role_fldname" />
+			<result property="description" column="role_flddes" />
+			<result property="order" column="role_fldorder"/>
+		</collection>
+	</resultMap>
+	
+
+	<select id="getUserByuserName" resultMap="userResultMap">
+		select
+		user_fldid,user_fldcode,user_fldpass,user_fldname
+		from sys_user
+		where user_fldcode=#{param1}
+	</select>
+
+	<select id="getRoleByuserName" resultMap="roleResultMap">
+		select s3.role_fldid,s3.role_fldname,s3.role_flddes ,s3.role_fldorder
+		from sys_user s1 ,sys_user_vs_role s2,sys_role s3
+		where s1.user_fldid=s2.fld_user_id 
+		and s2.fld_role_id = s3.role_fldid 
+		and rownum = 1
+		and s1.user_fldcode = #{param}
+		order by s1.user_fldid ,s3.role_fldorder 
+	</select>
+	
+</mapper> 

@@ -1,0 +1,89 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+.warp{
+	position: relative;
+	width: 100%;
+	height: 100vh;
+}
+.header{
+	width: 100%;
+	height: 45vh;
+	background: -webkit-linear-gradient(#086cc2, #a1caee); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#086cc2, #a1caee); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#086cc2, #a1caee); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#0b6dc4, #fff); /* 标准的语法（必须放在最后） */
+}
+.headert{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 45vh;
+	background: -webkit-linear-gradient(#086cc2, #a1caee); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#086cc2, #a1caee); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#086cc2, #a1caee); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#fff, #0b6dc4); /* 标准的语法（必须放在最后） */
+}
+.dl{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 560px;
+	height: 320px;
+	background: #1673c6;
+	border-radius: 15px;
+	border: 3px solid #c2c2c2;
+	box-shadow: 6px 8px 8px #888888;
+}
+.dl .top{
+	width: 100%;
+	height: 40%;
+	color: white;
+	line-height: 122px;
+	font-size: 24px;
+	text-align: center;
+	border-bottom: 2px solid #d7d7d7;
+}
+.dl .top h3{
+	margin: 0;
+}
+.dl .bottom{
+	width: 99%;
+	height: 56%;
+	background: #eeeceb;
+	margin: 6px auto;
+	color: #1070c4;
+	text-align: center;
+	font-weight: 600;
+}
+.dl .bottom form{
+	padding-top: 20px;
+}
+.dl .bottom form input{
+	margin-top: 16px;
+	height: 20px;
+	width: 200px;
+	border: none;
+}
+.dl .bottom form button{
+	margin-top: 20px;
+	border: none;
+	color: white;
+	font-weight: 700;
+	font-size: 16px;
+	cursor: pointer;
+	width: 60px;
+	height: 30px;
+	margin-left: 22px;
+	background: #1673c5;
+}
+.dl .bottom form button a{
+	color: white;
+	font-weight: 700;
+	font-size: 16px;
+	text-decoration: none;
+}

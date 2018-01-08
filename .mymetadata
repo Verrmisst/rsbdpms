@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="rsbdpms"
+  id="myeclipse.1513921727896"
+  context-root="/rsbdpms"
+  j2ee-spec="6.0"
+  archive="rsbdpms.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+

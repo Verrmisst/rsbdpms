@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+   <!-- 为实体Bean,定义一个别名 -->
+   <typeAliases>
+       <typeAlias alias="User" type="cn.net.inlink.entity.User"/>
+       <typeAlias alias="Role" type="cn.net.inlink.entity.Role"/>
+   </typeAliases>
+   
+   <!-- 引入映射器 -->
+   <mappers>
+   		<mapper resource="cn/net/inlink/mapper/userDaoMapper.xml"/>
+   		<mapper resource="cn/net/inlink/mapper/roleDaoMapper.xml"/>
+	</mappers>
+   
+   
+   
+</configuration>

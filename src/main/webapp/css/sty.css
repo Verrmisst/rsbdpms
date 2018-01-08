@@ -1,0 +1,230 @@
+.header{
+	width: 100%;
+	height: 15%;
+	background: linear-gradient(to right, #0b6ec3 , #ffffff);
+}
+.box{
+	position: relative;
+	width: 1194px;
+	height: 85px;
+	margin: 0 auto;
+	padding: 15px 0 0;
+}
+.uname{
+	line-height: 75px;
+	margin-right: 20px;
+	float: right;
+}
+.uname a{
+	font-size: 16px;
+	color: #1673C6;
+}
+.uname a:hover{
+	color: red;
+	cursor: pointer;
+}
+#gly{
+	margin-right: 10px;
+}
+
+
+.content{
+	width: 1230px;
+	height: 85%;
+	margin: 0 auto;
+}
+.left{
+	width: 156px;
+	float: left;
+}
+.menu{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	background: #0861ae;
+	text-align: center;
+}
+.menu span{
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+}
+.menu img{
+	height: 14px;
+	margin-right: 10px;
+}
+.listo{
+	width: 98%;
+	border-left:2px solid #b5cfd9;
+	border-right:2px solid #b5cfd9;
+}
+.listo h3{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	border-bottom: 2px solid #b5cfd9;
+}
+.listo h3 span{
+	font-size: 14px;
+}
+.listo h3 img{
+	height: 16px;
+	margin-right: 10px;
+}
+.listo .ulo{
+	border-bottom: 2px solid #b5cfd9;
+}
+.listo .ulo li{
+	width: 98%;
+	line-height: 30px;
+}
+.listo .ulo li a{
+	margin-left: 50px;
+	font-size: 14px;
+}
+.listo li a img{
+	margin-right: 10px;
+}
+.listo .ult {
+	display: none;
+}
+.listo .ult li{
+	line-height: 20px;
+}
+.listo .ult li a{
+	margin-left: 70px;
+	font-size: 12px;
+}
+.right{
+	width: 1060px;
+	height: 520px;
+	float: left;
+	margin-left: 8px;
+	margin-top: 8px;
+	background: white;
+	border: 2px solid #b5cfd9;
+}
+.right iframe{
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+.tc{
+	display: none;
+	position: absolute;
+	z-index: 69;
+	width: 100%;
+	height: 100vh;
+	background: rgba(0,0,0,0.2);
+}
+.ksn{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 200px;
+	height: 200px;
+	margin: auto;
+	width: 480px;
+	height: 300px;
+	background: #f2f9fd;
+	border: 2px solid #b5cfd9;
+	border-radius: 20px;	
+}
+.tit{
+	width: 100%;
+	height: 40px;
+	line-height: 50px;
+	border-bottom: 2px solid #b5cfd9;
+}
+.tit h2{
+	margin: 0 0 0 20px;
+	font-weight:600;
+}
+.kstext{
+	margin: -10px 20px 0 20px;
+}
+.kstext input{
+	display: inline-block;
+	width: 200px;
+	margin-top: 20px;
+}
+span.img {
+    float: left;
+    margin-top: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.cz{
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 250px;
+	height: 30px;
+}
+
+.qr{
+	width: 70px;
+	height: 30px;
+	background: #2796f8;
+	border: none;
+	border-radius: 8px;
+	outline: none;
+	color: white;
+	margin-right: 16px;
+	cursor: pointer;
+}
+.sx{
+	width: 70px;
+	height: 30px;
+	background: orange;
+	border: none;
+	border-radius: 8px;
+	outline: none;
+	color: white;
+	margin-right: 16px;
+	cursor: pointer;
+}
+.qx{
+	width: 70px;
+	height: 30px;
+	background: #fa1a25;
+	border: none;
+	border-radius: 8px;
+	outline: none;
+	color: white;
+	cursor: pointer;
+}
+
+.title{
+	width: 200px;
+    float: left;
+    line-height: 70px;
+    color: white;
+    font-size: 22px;
+    margin-left: 22px;
+    text-shadow:6px 4px 2px #000;
+}
+
+.inp{
+	width: 100%;
+	margin: 10px 0;
+}
+.inp div{
+	display: inline-block;
+	width: 49%;
+	margin: 0 auto;
+}
+.inp div span{
+	display: inline-block;
+	width: 60px;
+	text-align: right;
+}
+.inp div input{
+	width: 110px;
+}
