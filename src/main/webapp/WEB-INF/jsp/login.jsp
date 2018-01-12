@@ -53,7 +53,7 @@
 			</div>
 			<div class="bottom">
 				<span style="font-size: 15px;color:red;">${message}</span> 
-				<span style="font-size: 15px;color:red;">${session.info}</span> 
+				<span style="font-size: 15px;color:red;">${requestScope.info}</span> 
 				<span style="font-size: 15px;color:red;"><s:property value="#errormessage"/></span>
 				<span style="font-size: 15px;color:red;"><s:property value="#information"/></span>
 				<span style="font-size: 15px;color:red;">${infomation}</span>
@@ -61,12 +61,11 @@
 					账号：<input type="text" name="username" id="unm" /><br /> 密码：<input
 						type="password" name="password" id="pwd" /><br /> <input
 						type="submit" value="登录" id="sub" /> <input type="reset"
-						value="重置" />
+						value="重置" id="rst"/>
 				</form>
 			</div>
 		</div>
 
 	</div>
-<s:debug/>
 </body>
 </html>

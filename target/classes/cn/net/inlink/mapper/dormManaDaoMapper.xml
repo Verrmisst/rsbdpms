@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.net.inlink.dao.DormManaDao">
+
+	<resultMap type="UploadStaff" id="staffResultMap">
+		<id property="id" column="staff_fldid" />
+		<result property="empCode" column="staff_fldpersoncode" />
+		<result property="empName" column="staff_fldpersonname" />
+		<result property="gender" column="staff_fldpersongender" />
+		<result property="buildingName" column="staff_fldbuild" />
+		<result property="roomCode" column="staff_fldroomcode" />
+		<result property="bedNum" column="staff_fldbednum" />
+		<result property="wardrobeNum" column="staff_fldwardrobenum" />
+		<result property="deskNum" column="staff_flddesknum" />
+		<result property="shopboxNum" column="staff_fldshopboxnum" />
+		<result property="livingDate" column="staff_fldlivingdate" />
+		<result property="content" column="staff_fldcontent" />
+		
+		 <association property="dept" javaType="Dictionary">
+			<id property="id" column="dict_fldid" />
+			<result property="dictName" column="staff_flddeptname" />
+		</association>
+
+		<association property="duty" javaType="Dictionary">
+			<id property="id" column="dict_fldid" />
+			<result property="dictName" column="staff_flddutyname" />
+		</association> 
+
+	</resultMap>
+	
+	<resultMap type="UploadRoom" id="roomResultMap">
+		<id property="id" column="roomset_fldid"/>
+		<result property="buildName" column="roomset_fldbuildname"/>
+		<result property="roomCode" column="roomset_fldroomcode"/>
+		<result property="size" column="roomset_fldsize"/>
+		<result property="occupy" column="roomset_fldocc"/>
+		<result property="classify" column="roomset_fldclassify"/>
+		<result property="content1" column="roomset_fldcontent"/>
+		<result property="content2" column="roomset_fldcontent2"/>
+	</resultMap>
+	
+
+	<select id="getAllEmps" resultMap="staffResultMap">
+		SELECT
+		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,s2.dict_fldname
+		AS staff_flddeptname,s3.dict_fldname AS staff_flddutyname
+		,s1.staff_fldbuild,s1.staff_fldroomcode,s1.staff_fldbednum,s1.staff_fldwardrobenum,s1.staff_flddesknum,s1.staff_fldshopboxnum,s1.staff_fldlivingdate as staff_fldlivingdate,s1.staff_fldcontent
+		FROM ssh_staffinfo s1
+		LEFT JOIN sys_dict s2 ON s1.staff_flddept = s2.dict_fldid
+		LEFT JOIN sys_dict s3 ON s1.staff_fldduty = s3.dict_fldid
+		WHERE s1.staff_fldflag = 0 order by s1.staff_fldid
+	</select>
+	
+	<select id="getStaffByCode" resultMap="staffResultMap">
+		SELECT
+		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,s2.dict_fldname
+		AS staff_flddeptname,s3.dict_fldname AS staff_flddutyname
+		,s1.staff_fldbuild,s1.staff_fldroomcode,s1.staff_fldbednum,s1.staff_fldwardrobenum,s1.staff_flddesknum,s1.staff_fldshopboxnum,s1.staff_fldlivingdate,s1.staff_fldcontent
+		FROM ssh_staffinfo s1
+		LEFT JOIN sys_dict s2 ON s1.staff_flddept = s2.dict_fldid
+		LEFT JOIN sys_dict s3 ON s1.staff_fldduty = s3.dict_fldid
+		WHERE s1.staff_fldflag = 0 and s1.staff_fldpersoncode = #{param}
+	</select>
+	
+	<select id="getAllRooms" resultMap="roomResultMap">
+		select * from ssh_roomset where roomset_fldbuildname = #{param1}
+	</select>
+	
+	<select id="getRoomSetByCode" resultMap="roomResultMap">
+		select * from ssh_roomset where roomset_fldroomcode=#{param1} and roomset_fldbuildname=#{param2}
+	</select>
+</mapper> 

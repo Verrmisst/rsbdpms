@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.net.inlink.dao.StaffManaDao">
+	
+	<resultMap type="Dictionary" id="dictResultMap">
+		<id property="id" column="dict_fldid" />
+		<result property="dictName" column="dict_fldname"/>		
+		<result property="dictType" column="dict_fldtype"/>		
+	</resultMap>
+	
+	<resultMap type="Building" id="buildingResultMap">
+		<id property="id" column="build_fldid" />
+		<result property="buildingName" column="build_fldname"/>		
+		<result property="content" column="build_content"/>		
+	</resultMap>
+	
+	<resultMap type="Room" id="roomResultMap">
+		<id property="id" column="room_fldid"/>
+		<result property="roomCode" column="room_fldcode"/>
+	</resultMap>
+	
+	<resultMap type="Employee" id="empResultMap">
+		<id property="id" column="person_fldid"/>
+		<result property="empCode" column="person_fldcode"/>
+		<result property="empName" column="person_fldname"/>
+		<result property="content" column="person_fldcontent"/>
+	</resultMap>
+	
+	<insert id="insertIntoEmp" parameterType="cn.net.inlink.vo.Employee">
+		insert into
+		ssh_person(person_fldid,person_fldcode,person_fldname,person_fldcontent,person_fldcreatedate)
+		values(seq_person.nextval,#{empCode},#{empName},#{content},sysdate)
+	</insert>
+	
+	<update id="updateIntoEmpGender">
+		update  
+			ssh_person set person_fldgender=#{param1} where 1=1 and person_fldcode=#{param2} 
+	</update>
+	
+	<select id="getIdByDictName" resultMap="dictResultMap">
+		select dict_fldid from sys_dict where dict_fldname = #{param}
+	</select>
+	
+	<select id="getIdByBuildName" resultMap="buildingResultMap">
+		select build_fldid,build_fldname,build_content from ssh_building where 1=1 and build_fldname = #{param}
+	</select>
+	
+	<insert id="insertIntoRoom" parameterType="cn.net.inlink.vo.Room">
+		insert into
+		     ssh_room(room_fldid,room_fldcode) values(seq_room.nextval,#{roomCode})
+	</insert>
+	
+	<update id="updateRoomBuildId">
+		update ssh_room set room_fldbuildid = #{param1} where 1=1 and room_fldcode=#{param2}
+	</update>
+	
+	<insert id="insertIntoGoods" parameterType="cn.net.inlink.vo.Goods">
+		insert into 
+			ssh_goods(goods_fldid,goods_fldtype,goods_fldcode,goods_fldroomid,goods_fldpersonid) 
+		 		values(seq_goods.nextval,#{param1},#{param2},#{param3},#{param4})
+	</insert>
+	
+	<select id="getEmpIdByCode" resultMap="empResultMap">
+		select person_fldid from ssh_person where person_fldcode=#{param}
+	</select>
+	
+	<select id="getRoomIdByCode" resultMap="roomResultMap">
+		select room_fldid from ssh_room where room_fldcode=#{param}
+	</select>
+	
+	<select id="getAllEmps" resultMap="empResultMap">
+		select person_fldid,person_fldcode,person_fldname,person_fldcontent from ssh_person where person_fldflag=0 order by person_fldcode;
+	</select>
+	
+	<update id="updateEmpDutyDept">
+		update ssh_person set person_flddepart = #{param1},person_fldduty = #{param2} where person_fldcode = #{param3}
+	</update>
+	
+</mapper> 

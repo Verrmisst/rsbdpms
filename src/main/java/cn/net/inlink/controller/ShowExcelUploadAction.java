@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 /**
- * 控制显示总务单独录入页面的控制器
+ * 控制显示总务批量上传页面的控制器
  * @author Yz
  *
  */

@@ -1,4 +1,4 @@
-body{
+﻿body{
 	margin: 0;
 	padding: 0;
 }
@@ -10,9 +10,9 @@ body{
 .header{
 	width: 100%;
 	height: 45vh;
-	background: -webkit-linear-gradient(#086cc2, #a1caee); /* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(#086cc2, #a1caee); /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(#086cc2, #a1caee); /* Firefox 3.6 - 15 */
+	background: -webkit-linear-gradient(#0b6dc4, #fff); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#0b6dc4, #fff); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#0b6dc4, #fff); /* Firefox 3.6 - 15 */
     background: linear-gradient(#0b6dc4, #fff); /* 标准的语法（必须放在最后） */
 }
 .headert{
@@ -20,9 +20,9 @@ body{
 	bottom: 0;
 	width: 100%;
 	height: 45vh;
-	background: -webkit-linear-gradient(#086cc2, #a1caee); /* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(#086cc2, #a1caee); /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(#086cc2, #a1caee); /* Firefox 3.6 - 15 */
+	background: -webkit-linear-gradient(#fff, #0b6dc4); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#fff, #0b6dc4); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#fff, #0b6dc4); /* Firefox 3.6 - 15 */
     background: linear-gradient(#fff, #0b6dc4); /* 标准的语法（必须放在最后） */
 }
 .dl{
@@ -69,7 +69,7 @@ body{
 	width: 200px;
 	border: none;
 }
-.dl .bottom form button{
+#rst,#sub{
 	margin-top: 20px;
 	border: none;
 	color: white;
@@ -80,10 +80,4 @@ body{
 	height: 30px;
 	margin-left: 22px;
 	background: #1673c5;
-}
-.dl .bottom form button a{
-	color: white;
-	font-weight: 700;
-	font-size: 16px;
-	text-decoration: none;
 }

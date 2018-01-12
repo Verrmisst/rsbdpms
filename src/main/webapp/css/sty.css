@@ -1,6 +1,9 @@
 .header{
 	width: 100%;
 	height: 15%;
+	background: -webkit-linear-gradient(left, #0b6ec3 , #ffffff); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #0b6ec3 , #ffffff); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #0b6ec3 , #ffffff); /* Firefox 3.6 - 15 */
 	background: linear-gradient(to right, #0b6ec3 , #ffffff);
 }
 .box{

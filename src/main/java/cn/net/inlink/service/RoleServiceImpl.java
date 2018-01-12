@@ -17,7 +17,7 @@ import cn.net.inlink.entity.Role;
  *
  */
 @Service(value="roleService")
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class RoleServiceImpl implements RoleService{
 	
 	//属性依赖

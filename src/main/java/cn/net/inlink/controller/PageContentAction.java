@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.net.inlink.entity.Function;
 import cn.net.inlink.entity.Role;
@@ -58,7 +59,8 @@ public class PageContentAction extends ActionSupport {
 	public void setPageContent(String pageContent) {
 		this.pageContent = pageContent;
 	}
-
+	
+	@Transactional(rollbackFor = Exception.class)
 	public String execute() {
 		// 获取到用户的sessionMap
 		Map<String, Object> session = ServletActionContext.getContext()

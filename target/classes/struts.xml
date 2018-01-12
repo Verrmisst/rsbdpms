@@ -45,29 +45,151 @@
 		<action name="pagecontent" class="cn.net.inlink.controller.PageContentAction">
 			<result name="show pagecontent" type="json"></result>
 		</action>
-		
-		 <!-- 显示欢迎页面 -->
+
+		<!-- 显示欢迎页面 -->
 		<action name="showWelcome" class="cn.net.inlink.controller.ShowWelcomeAction">
-		   <result name="show welcome">/WEB-INF/jsp/welcome.jsp</result>
+			<result name="show welcome">/html/welcome.html</result>
 		</action>
-		
+
 		<!-- 显示单独录入页面 -->
 		<action name="showSingle" class="cn.net.inlink.controller.ShowSingleTypeinAction">
-		   <result name="show single">/jsp/singletypein.jsp</result>
+			<result name="show single">/jsp/singletypein.jsp</result>
 		</action>
-		
-		<!-- 显示单独录入页面 -->
+
+		<!-- 显示总务excel录入页面 -->
 		<action name="showExcel" class="cn.net.inlink.controller.ShowExcelUploadAction">
-		   <result name="show excel">/jsp/excelupload.jsp</result>
+			<result name="show excel">/jsp/excelupload.jsp</result>
+		</action>
+
+		<!-- 显示总务录入页面 -->
+		<action name="showmanapage" class="cn.net.inlink.controller.ShowManaPageAction">
+			<result name="show success">jsp/affairstypein.jsp</result>
 		</action>
 		
+		<!-- 显示人事excel录入页面 -->
+		<action name="showhrexcel" class="cn.net.inlink.controller.ShowHRUploadAction">
+			<result name="show excel">/jsp/hrupload.jsp</result>
+		</action>
+
+		<!-- 显示人事录入页面 -->
+		<action name="showhrpersonnel" class="cn.net.inlink.controller.ShowHRSingleTypeinAction">
+			<result name="show single">jsp/personnel.jsp</result>
+		</action>
+		
+		<!-- 显示人事初始化信息 -->
+		<action name="showpagingstaff" class="cn.net.inlink.controller.ShowHRExchangeAction">
+			<result name="success">jsp/hrexchange.jsp</result>
+		</action> 
+		
+		<!-- 显示查询出的员工信息 -->
+		<action name="showstaff" class="cn.net.inlink.controller.QueryEmpAction">
+			<result name="success">jsp/personnelinfo.jsp</result>
+			<result name="error">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
+		
+		<!-- 显示入住人员信息 -->
+		<action name="showpagingdorm" class="cn.net.inlink.controller.DormPagingAction">
+			<result name="show dorm">jsp/changedorm.jsp</result>
+			<result name="show error">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
+		<!-- 显示查询出的信息 -->
+		<action name="showstaffdorm" class="cn.net.inlink.controller.QueryStaffAction">
+			<result name="show success">jsp/changedorm-single.jsp</result>
+			<result name="show error">/WEB-INF/jsp/error.jsp</result>
+		</action>
+
+		<!-- 显示借用信息 -->
+		<action name="showborrow" class="cn.net.inlink.controller.ShowBorrowAction">
+			<result name="show success">/WEB-INF/jsp/nextversion.jsp</result>
+		</action>
+
+		<!-- 显示通报信息 -->
+		<action name="shownotifice" class="cn.net.inlink.controller.ShowNotificationAction">
+			<result name="show success">/WEB-INF/jsp/nextversion.jsp</result>
+		</action>
+
+
 		<!-- 修改密码 -->
 		<action name="editpass" class="cn.net.inlink.controller.ChangePasswordAction">
-			<result name="edit success" >/WEB-INF/jsp/login.jsp</result>
+			<result name="edit success">/WEB-INF/jsp/login.jsp</result>
 			<result name="edit error">/WEB-INF/jsp/error.jsp</result>
 		</action>
 
+		<!-- 单个录入 -->
+		<action name="singletypein" class="cn.net.inlink.controller.SingleTypeinAction">
+			<result name="insert success">/jsp/singletypein.jsp</result>
+			<result name="insert error">/WEB-INF/jsp/error.jsp</result>
+		</action>
 
+		<!-- 上传操作 -->
+		<!-- 【注意】 fileUpload拦截器应设置在defaultStack之前 -->
+		<action name="upload" class="cn.net.inlink.controller.UploadAction">
+			<interceptor-ref name="fileUpload">
+				<!-- ie:image/pjpeg -->
+				<param name="allowedTypes">
+					<!-- image/bmp,image/png, image/gif,image/jpeg -->
+					application/excel,
+					application/vnd.ms-excel
+				</param>
+				<!-- 文件大小限制是1m(字节数) -->
+				<param name="maximumSize">1024000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+
+			<param name="savePath">upload</param>
+
+			<result name="input">/jsp/excelupload.jsp</result>
+			<result name="upload success">/WEB-INF/jsp/error.jsp</result>
+			<result name="hrupload success">/WEB-INF/jsp/error.jsp</result>
+			<result name="upload error">/WEB-INF/jsp/error.jsp</result>
+			<result name="errorInfo">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
+		<!-- 更新员工部门和职务信息 -->
+		<action name="staffmanager" class="cn.net.inlink.controller.StaffManagerAction">
+			<result name="update success" >/jsp/personnel.jsp</result>
+			<result name="update error" >/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
+		<!-- 员工退宿 -->
+		<action name="checkout" class="cn.net.inlink.controller.StaffCheckOutAction">
+			<result name="checkout success" type="chain">showpagingdorm</result>
+			<result name="checkout error">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
+		<!-- 员工调宿 -->
+		<action name="staffexchange" class="cn.net.inlink.controller.ExchangeDormAction">
+			<result name="exchange error" >/WEB-INF/jsp/error.jsp</result>
+			<result name="exchange success" type="redirectAction">showpagingdorm</result>
+		</action>
+		
+		<!-- 显示调宿页面 -->
+		<action name="showexchange" class="cn.net.inlink.controller.ShowExchangeAction">
+			<result name="show exchange">/jsp/exchangeliving.jsp</result>
+		</action>
+		
+				
+		<!-- 显示宿舍楼宿舍信息 -->
+		<action name="builddorm" class="cn.net.inlink.controller.BuildingPagingAction">
+			<result name="build error">/WEB-INF/jsp/error.jsp</result>
+			<result name="build wenbo">jsp/build_wenbo.jsp</result>
+			<result name="build jingya">jsp/build_jingya.jsp</result>
+		</action>
+		
+		<!-- 根据宿舍编号查询宿舍 -->
+		<action name="singleroom" class="cn.net.inlink.controller.QueryRoomSetAction">
+			<result name="show error">/WEB-INF/jsp/error.jsp</result>
+			<result name="show roomset_wenbo">jsp/build_wenbo-single.jsp</result>
+			<result name="show roomset_jingya">jsp/build_jingya-single.jsp</result>
+		</action>
+	
+		<!-- 更新宿舍配置信息 -->
+		<action name="changeroomset" class="cn.net.inlink.controller.ChangeRoomSetAction">
+			<result name="update success" type="chain">builddorm</result>
+			<result name="update error">/WEB-INF/jsp/error.jsp</result>
+		</action>
 	</package>
 
 </struts>

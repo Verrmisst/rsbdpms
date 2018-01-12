@@ -15,10 +15,11 @@
 				<h3>Excel导入</h3>
 			</div>
 			<div class="bottom">
-				<form>
+				<form action="upload.action" method="post" enctype="multipart/form-data">
 					<div class="inp">
 						<div>
-							<input id="wj" type="file" style="background: white; margin-left: 20px;"/>
+							<input id="wj" type="file" style="background: white; margin-left: 20px;" name="upload"/>
+							<input type="hidden" name="uploadtype" value="1"/>
 						</div>
 					</div>
 					<div class="btn">

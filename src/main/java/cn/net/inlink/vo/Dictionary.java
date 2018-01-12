@@ -1,5 +1,7 @@
 package cn.net.inlink.vo;
 
+import org.apache.xmlbeans.impl.store.Public2;
+
 /**
  * 字典实体
  * @author Yz
@@ -15,7 +17,15 @@ public class Dictionary {
 	//类型
 	private String dictType;
 
+	public Dictionary(){}
 	
+	public Dictionary(Integer id, String dictName, String dictType) {
+		super();
+		this.id = id;
+		this.dictName = dictName;
+		this.dictType = dictType;
+	}
+
 	public Integer getId() {
 		return id;
 	}

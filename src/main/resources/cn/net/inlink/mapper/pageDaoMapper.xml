@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.net.inlink.dao.PageDao">
+	
+	<!-- <resultMap type="Dictionary" id="dictResultMap">
+		<id property="id" column="dict_fldid" />
+		<result property="dictName" column="dict_fldname"/>		
+		<result property="dictType" column="dict_fldtype"/>	
+	</resultMap> -->
+	
+	
+	<resultMap type="Employee" id="empResultMap">
+		<id property="id" column="person_fldid"/>
+		<result property="empCode" column="person_fldcode"/>
+		<result property="empName" column="person_fldname"/>
+		<result property="content" column="person_fldcontent"/>
+		<!-- <association property="dept" resultMap="dictResultMap">
+			<id property="id" column="dict_fldid" />
+			<result property="dictName" column="dict_fldname"/>		
+			<result property="dictType" column="dict_fldtype"/>	
+		</association>
+		
+		<association property="duty"  resultMap="dictResultMap">
+			<id property="id" column="dict_fldid" />
+			<result property="dictName" column="dict_fldname"/>		
+			<result property="dictType" column="dict_fldtype"/>	
+		</association> -->
+	</resultMap>
+	
+	<select id="getAllEmp" resultMap="empResultMap">
+		select * from ssh_person where person_flddepart is null or person_fldduty is null order by person_fldid 
+	</select>
+	
+	<select id="getEmpByCode" resultMap="empResultMap">
+		select * from ssh_person where person_fldcode = #{param} and (person_flddepart is null or person_fldduty is null) order by person_fldid
+	</select>
+	
+</mapper> 

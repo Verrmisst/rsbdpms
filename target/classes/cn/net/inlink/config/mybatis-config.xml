@@ -7,12 +7,24 @@
    <typeAliases>
        <typeAlias alias="User" type="cn.net.inlink.entity.User"/>
        <typeAlias alias="Role" type="cn.net.inlink.entity.Role"/>
+       <typeAlias alias="Employee" type="cn.net.inlink.vo.Employee"/>
+       <typeAlias alias="Dictionary" type="cn.net.inlink.vo.Dictionary"/>
+       <typeAlias alias="Building" type="cn.net.inlink.vo.Building"/>
+       <typeAlias alias="Room" type="cn.net.inlink.vo.Room"/>
+       <typeAlias alias="Goods" type="cn.net.inlink.vo.Goods"/>
+       <typeAlias alias="UploadStaff" type="cn.net.inlink.vo.UploadStaff"/>
+       <typeAlias alias="UploadRoom" type="cn.net.inlink.vo.UploadRoom"/>
+       <typeAlias alias="UploadDeptDuty" type="cn.net.inlink.vo.UploadDeptDuty"/>
    </typeAliases>
    
    <!-- 引入映射器 -->
    <mappers>
    		<mapper resource="cn/net/inlink/mapper/userDaoMapper.xml"/>
    		<mapper resource="cn/net/inlink/mapper/roleDaoMapper.xml"/>
+   		<mapper resource="cn/net/inlink/mapper/staffManaDaoMapper.xml"/>
+   		<mapper resource="cn/net/inlink/mapper/pageDaoMapper.xml"/>
+   		<mapper resource="cn/net/inlink/mapper/uploadStaffDaoMapper.xml"/>
+   		<mapper resource="cn/net/inlink/mapper/dormManaDaoMapper.xml"/>
 	</mappers>
    
    

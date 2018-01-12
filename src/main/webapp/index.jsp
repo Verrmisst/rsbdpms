@@ -8,6 +8,6 @@
   </head>
   
   <body>
-  <%--  <% response.sendRedirect("loginpage"); %>   --%>
+   <% response.sendRedirect("loginpage"); %>  
   </body>
 </html>

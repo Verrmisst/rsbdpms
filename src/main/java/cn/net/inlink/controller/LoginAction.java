@@ -9,6 +9,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.net.inlink.entity.User;
 import cn.net.inlink.service.UserService;
@@ -70,7 +71,8 @@ public class LoginAction extends ActionSupport {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
+	
+	@Transactional(rollbackFor = Exception.class)
 	public String execute() {
 
 		if (this.username != null && this.password != null) {

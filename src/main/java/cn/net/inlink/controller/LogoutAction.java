@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.net.inlink.entity.User;
 
@@ -25,7 +26,8 @@ public class LogoutAction extends ActionSupport {
 
 	// 日志记录
 	private Logger log = Logger.getLogger(LogoutAction.class);
-
+	
+	@Transactional(rollbackFor = Exception.class)
 	public String execute() {
 
 		// 获取session对象

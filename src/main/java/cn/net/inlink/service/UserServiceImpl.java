@@ -18,7 +18,7 @@ import cn.net.inlink.entity.User;
  * 
  */
 @Service(value = "userService")
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
 
 	// 设置属性依赖

@@ -1,5 +1,7 @@
 package cn.net.inlink.vo;
 
+import java.util.List;
+
 /**
  * 宿舍房间实体类
  * @author Yz
@@ -16,6 +18,10 @@ public class Room {
 	//一对一关联关系
 	private Building building;
 	
+	
+	//所有无凭
+	//一对多关联关系
+	private List<Goods> goods;
 	
 	//备注
 	private String content;
@@ -58,6 +64,16 @@ public class Room {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+
+	public List<Goods> getGoods() {
+		return goods;
+	}
+
+
+	public void setGoods(List<Goods> goods) {
+		this.goods = goods;
 	}
 	
 	

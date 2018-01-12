@@ -9,6 +9,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -21,6 +22,8 @@ import cn.net.inlink.service.UserService;
  * @author Yz
  * 
  */
+@Controller
+@Scope("prototype")
 public class ChangePasswordAction extends ActionSupport {
 	
 	//日志
@@ -37,7 +40,7 @@ public class ChangePasswordAction extends ActionSupport {
 	private String confirmPassword;
 
 	// 信息
-	private String infomation;
+	private String information;
 
 	public UserService getService() {
 		return service;
@@ -63,14 +66,16 @@ public class ChangePasswordAction extends ActionSupport {
 		this.confirmPassword = confirmPassword;
 	}
 
-	public String getInfomation() {
-		return infomation;
+
+	public String getInformation() {
+		return information;
 	}
 
-	public void setInfomation(String infomation) {
-		this.infomation = infomation;
+	public void setInformation(String information) {
+		this.information = information;
 	}
-
+	
+	@Transactional(rollbackFor = Exception.class)
 	public String execute(){
 		
 		//获取SessionMap
@@ -86,7 +91,7 @@ public class ChangePasswordAction extends ActionSupport {
 		if(!this.newPassword.equals(this.confirmPassword)){
 			
 			
-			this.infomation = "修改失败，请重新进行修改！";
+			this.information = "修改失败，请重新进行修改！";
 			
 			log.error(user.getUserName()+"，密码修改失败，时间："+new SimpleDateFormat().format(new Date()));
 			
@@ -99,7 +104,7 @@ public class ChangePasswordAction extends ActionSupport {
 			//将用户从sessionMap中移除。
 			session.remove("user");
 			
-			this.infomation = "修改成功，请重新登录！";
+			this.information = "修改成功，请重新登录！";
 			
 			log.info(user.getUserName()+"，密码修改成功，时间："+new SimpleDateFormat().format(new Date()));
 			

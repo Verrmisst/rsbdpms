@@ -43,7 +43,7 @@ public class SessionFilter implements Filter {
 		//判断用户是否登录
 		if (null == session.getAttribute("user")) {
 			
-			session.setAttribute("info", "请先登录!");
+			req.setAttribute("info", "请先登录!");
 			
 			res.sendRedirect(url + "/loginpage");
 		}

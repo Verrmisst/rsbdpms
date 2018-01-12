@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="css/sty.css" />
 		<script type="text/javascript" src="js/jquery-1.8.2.js" ></script>
 		<script type="text/javascript" src="js/index.js" ></script>
-		<title>首页</title>
+		<title>RSBDPMS</title>
 	</head>
 	<body>
 		<!--人事调配的批量操作-->
@@ -27,6 +27,8 @@
 				</div>
 			</div>
 		</div>
+		
+		
 		<!--员工借用的添加借用-->
 		<div id="jy" class="tc">
 			<div class="ksn">

@@ -20,18 +20,18 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-      
-    <!-- 定义过虑jsp文件或指定目录的Filter -->  
-    <filter>  
-        <filter-name>sessionFilter</filter-name>  
-        <filter-class>cn.net.inlink.filter.SessionFilter</filter-class>  
-    </filter>  
-    <filter-mapping>  
-        <filter-name>sessionFilter</filter-name>  
-         <url-pattern>/jsp/*</url-pattern>  
-    </filter-mapping>  
-	
-	
+
+	<!-- 定义过虑jsp文件或指定目录的Filter -->
+	<filter>
+		<filter-name>sessionFilter</filter-name>
+		<filter-class>cn.net.inlink.filter.SessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>sessionFilter</filter-name>
+		<url-pattern>/jsp/*</url-pattern>
+	</filter-mapping>
+
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -46,16 +46,22 @@
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
+
+	<!-- session不会过期 -->
+	<session-config>
+		<session-timeout>0</session-timeout>
+	</session-config>
+
 	<error-page>
 		<error-code>404</error-code>
-		<location>/</location>
+		<location>/html/404.html</location>
 	</error-page>
 	<error-page>
 		<error-code>403</error-code>
-		<location>/</location>
+		<location>/html/403.html</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/</location>
+		<location>/html/500.html</location>
 	</error-page>
 </web-app>
