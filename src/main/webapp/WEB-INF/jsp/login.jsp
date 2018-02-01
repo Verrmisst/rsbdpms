@@ -49,7 +49,7 @@
 		<div class="headert"></div>
 		<div class="dl">
 			<div class="top">
-				<h3>宿舍管理系统登录</h3>
+				<h3>宿舍人员入住管理系统</h3>
 			</div>
 			<div class="bottom">
 				<span style="font-size: 15px;color:red;">${message}</span> 

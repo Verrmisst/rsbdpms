@@ -27,7 +27,7 @@ public class LogoutAction extends ActionSupport {
 	// 日志记录
 	private Logger log = Logger.getLogger(LogoutAction.class);
 	
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
 	public String execute() {
 
 		// 获取session对象

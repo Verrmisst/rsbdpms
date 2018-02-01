@@ -1,6 +1,5 @@
 package cn.net.inlink.vo;
 
-import java.util.Date;
 
 /**
  * 记录上传员工信息
@@ -41,7 +40,17 @@ public class UploadStaff {
 
 	// 入住时间
 	private String livingDate;
-
+	
+	//退宿时间
+	private String checkOutDate;
+	
+	//调宿时间
+	private String exchangeDate;
+	
+	private String beginDate;
+	
+	private String endDate;
+	
 	// 备注
 	private String content;
 	
@@ -163,16 +172,54 @@ public class UploadStaff {
 	public void setDept(Dictionary dept) {
 		this.dept = dept;
 	}
+	
+
+	public String getCheckOutDate() {
+		return checkOutDate;
+	}
+
+	public void setCheckOutDate(String checkOutDate) {
+		this.checkOutDate = checkOutDate;
+	}
+	
+	public String getExchangeDate() {
+		return exchangeDate;
+	}
+
+	public void setExchangeDate(String exchangeDate) {
+		this.exchangeDate = exchangeDate;
+	}
+	
+	public String getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(String beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(this.empCode).append("  ").append(empName).append("  ")
-				.append(gender).append("  ").append(buildingName).append("  ")
-				.append(roomCode).append("  ").append(content);
-
-		return sb.toString();
+		return "UploadStaff [id=" + id + ", empCode=" + empCode + ", empName="
+				+ empName + ", gender=" + gender + ", buildingName="
+				+ buildingName + ", roomCode=" + roomCode + ", bedNum="
+				+ bedNum + ", wardrobeNum=" + wardrobeNum + ", deskNum="
+				+ deskNum + ", shopboxNum=" + shopboxNum + ", livingDate="
+				+ livingDate + ", checkOutDate=" + checkOutDate
+				+ ", exchangeDate=" + exchangeDate + ", content=" + content
+				+ ", duty=" + duty + ", dept=" + dept + "]";
 	}
+	
 
+
+
+	
 }

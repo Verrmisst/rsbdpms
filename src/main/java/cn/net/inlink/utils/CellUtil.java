@@ -15,7 +15,7 @@ import org.apache.poi.ss.usermodel.DateUtil;
 public class CellUtil {
 	public static String getStringCellValue(Cell cell) {
 		if (cell == null) {
-			return null;
+			return "";
 		}
 		String value = "";
 		switch (cell.getCellType()) {
@@ -26,7 +26,7 @@ public class CellUtil {
 			if (DateUtil.isCellDateFormatted(cell)) {
 				Date date = cell.getDateCellValue();
 				if (date != null) {
-					value = new SimpleDateFormat("yyyy-MM-dd").format(date);
+					value = new SimpleDateFormat("yyyy/MM/dd").format(date);
 				} else {
 					value = "";
 				}

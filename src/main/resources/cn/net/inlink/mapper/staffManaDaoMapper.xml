@@ -52,7 +52,7 @@
 	</insert>
 	
 	<update id="updateRoomBuildId">
-		update ssh_room set room_fldbuildid = #{param1} where 1=1 and room_fldcode=#{param2}
+		update ssh_room set room_fldbuildid = #{param1} where room_fldcode=#{param2}
 	</update>
 	
 	<insert id="insertIntoGoods" parameterType="cn.net.inlink.vo.Goods">
@@ -62,7 +62,11 @@
 	</insert>
 	
 	<select id="getEmpIdByCode" resultMap="empResultMap">
-		select person_fldid from ssh_person where person_fldcode=#{param}
+		select person_fldid from ssh_person where person_fldcode=#{param} and person_fldflag=0
+	</select>
+	
+	<select id="getCOEmpIdByCode" resultMap="empResultMap">
+		select person_fldid from ssh_person where person_fldcode=#{param} and person_fldflag=1
 	</select>
 	
 	<select id="getRoomIdByCode" resultMap="roomResultMap">
@@ -76,5 +80,9 @@
 	<update id="updateEmpDutyDept">
 		update ssh_person set person_flddepart = #{param1},person_fldduty = #{param2} where person_fldcode = #{param3}
 	</update>
+	
+	<select id="getDeptOrDuty" resultMap="dictResultMap">
+		SELECT decode(dict_fldname,'0','无','1','无',dict_fldname) AS dict_fldname FROM sys_dict WHERE dict_fldtype = #{param} order by dict_fldname
+	</select>
 	
 </mapper> 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.net.inlink.dao.StaffNotificationDao">
+
+	<resultMap type="StaffNotification" id="notificeResultMap">
+		<id property="id" column="breakrule_fldid" />
+		<result property="notificeType" column="breakrule_fldtype" />
+		<result property="notificeTime" column="breakrule_fldtime" />
+		<result property="notificeReason" column="breakrule_fldreason" />
+		<result property="notificeMoney" column="breakrule_fldcash" />
+
+		<association property="staff" javaType="UploadStaff">
+			<id property="id" column="STAFF_FLDID" />
+			<result property="empCode" column="STAFF_FLDPERSONCODE" />
+			<result property="empName" column="STAFF_FLDPERSONNAME" />
+			<result property="buildingName" column="STAFF_FLDBUILD" />
+			<result property="roomCode" column="STAFF_FLDROOMCODE" />
+			<association property="dept" javaType="Dictionary">
+				<id property="id" column="dict_fldid" />
+				<result property="dictName" column="staff_flddeptname" />
+			</association>
+	
+		</association>
+	</resultMap>
+
+	<select id="getAllNotifications" resultMap="notificeResultMap">
+		select
+		t1.breakrule_fldid,t1.breakrule_fldtype,t1.breakrule_fldtime,t1.breakrule_fldreason,
+		t1.breakrule_fldcash,t2.staff_fldid,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldbuild,t2.staff_fldroomcode,
+		t3.dict_fldname as staff_flddeptname
+		from ssh_breakrule t1
+		left join ssh_staffinfo t2 on
+		t1.breakrule_fldpersonid = t2.staff_fldid
+		left join sys_dict t3 on
+		t2.staff_flddept = t3.dict_fldid
+		order by t1.breakrule_fldtime
+	</select>
+
+	<select id="getNotificationByCode" resultMap="notificeResultMap">
+		select
+		t1.breakrule_fldid,t1.breakrule_fldtype,t1.breakrule_fldtime,t1.breakrule_fldreason,
+		t1.breakrule_fldcash,t2.staff_fldid,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldbuild,t2.staff_fldroomcode,
+		t3.dict_fldname as staff_flddeptname
+		from ssh_breakrule t1
+		left join ssh_staffinfo t2 on
+		t1.breakrule_fldpersonid = t2.staff_fldid
+		left join sys_dict t3 on
+		t2.staff_flddept = t3.dict_fldid
+		where t2.staff_fldpersoncode = #{param}
+		order by t1.breakrule_fldtime
+	</select>
+
+
+
+</mapper> 

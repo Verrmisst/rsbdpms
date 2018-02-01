@@ -100,7 +100,7 @@ public class BuildingPagingAction {
 		this.pageCount = pageCount;
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
 	public String execute() {
 
 		// 获取宿舍楼名
@@ -111,7 +111,8 @@ public class BuildingPagingAction {
 		} else if (this.buildId.equals("2")) {
 			buildName = new String("静雅苑");
 		}
-
+		
+		
 		// 分页参数：跳过几行，
 		/*
 		 * offest的值和页码相关，每页记录数*页码

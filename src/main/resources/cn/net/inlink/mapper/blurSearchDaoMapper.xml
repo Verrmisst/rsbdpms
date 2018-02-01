@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.net.inlink.dao.BlurSearchDao">
+
+	<resultMap type="UploadStaff" id="staffResultMap">
+		<id property="id" column="staff_fldid" />
+		<result property="empCode" column="staff_fldpersoncode" />
+		<result property="empName" column="staff_fldpersonname" />
+		<result property="gender" column="staff_fldpersongender" />
+		<result property="buildingName" column="staff_fldbuild" />
+		<result property="roomCode" column="staff_fldroomcode" />
+		<result property="bedNum" column="staff_fldbednum" />
+		<result property="wardrobeNum" column="staff_fldwardrobenum" />
+		<result property="deskNum" column="staff_flddesknum" />
+		<result property="shopboxNum" column="staff_fldshopboxnum" />
+		<result property="livingDate" column="staff_fldlivingdate" />
+		<result property="checkOutDate" column="staff_fldcheckoutdate" />
+		<result property="exchangeDate" column="staff_fldexchangedate"/>
+		<result property="content" column="staff_fldcontent" />
+
+		<association property="dept" javaType="Dictionary">
+			<id property="id" column="dict_fldid" />
+			<result property="dictName" column="staff_flddeptname" />
+		</association>
+
+		<association property="duty" javaType="Dictionary">
+			<id property="id" column="dict_fldid" />
+			<result property="dictName" column="staff_flddutyname" />
+		</association>
+
+	</resultMap>
+
+	<resultMap type="RoomGoods" id="roomGoodsResultMap">
+		<id property="id" column="ROOMGOODS_FLDID" />
+		<result property="buildName" column="ROOMGOODS_FLDBUILDNAME" />
+		<result property="roomCode" column="ROOMGOODS_FLDROOMCODE" />
+		<result property="bedNum" column="ROOMGOODS_FLDBEDNUM" />
+		<result property="wardrobeNum" column="ROOMGOODS_FLDWARDROBENUM" />
+		<result property="deskNum" column="ROOMGOODS_FLDDESKNUM" />
+
+		<association property="staff" javaType="UploadStaff">
+			<id property="id" column="staff_fldid" />
+			<result property="empCode" column="staff_fldpersoncode" />
+			<result property="empName" column="staff_fldpersonname" />
+			<result property="gender" column="staff_fldpersongender" />
+			<result property="buildingName" column="staff_fldbuild" />
+			<result property="roomCode" column="staff_fldroomcode" />
+			<result property="shopboxNum" column="staff_fldshopboxnum" />
+			<association property="dept" javaType="Dictionary">
+				<id property="id" column="dict_fldid" />
+				<result property="dictName" column="staff_flddeptname" />
+			</association>
+
+			<association property="duty" javaType="Dictionary">
+				<id property="id" column="dict_fldid" />
+				<result property="dictName" column="staff_flddutyname" />
+			</association>
+
+		</association>
+
+		<association property="room" javaType="UploadRoom">
+			<id property="id" column="roomset_fldid" />
+			<result property="buildName" column="roomset_fldbuildname" />
+			<result property="roomCode" column="roomset_fldroomcode" />
+			<result property="size" column="roomset_fldsize" />
+			<result property="occupy" column="roomset_fldocc" />
+			<result property="classify" column="roomset_fldclassify" />
+			<result property="content1" column="roomset_fldcontent" />
+			<result property="content2" column="roomset_fldcontent2" />
+			<result property="content3" column="roomset_fldcontent3" />
+		</association>
+
+	</resultMap>
+
+
+	<select id="getStaffsByBlur" resultMap="staffResultMap">
+		SELECT
+		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,decode(s2.dict_fldname,'1','无',s2.dict_fldname)
+		AS staff_flddeptname,decode(s3.dict_fldname,'0','无',s3.dict_fldname)
+		AS staff_flddutyname
+		,s1.staff_fldbuild,s1.staff_fldroomcode,s1.staff_fldbednum,s1.staff_fldwardrobenum,s1.staff_flddesknum,s1.staff_fldshopboxnum,s1.staff_fldlivingdate
+		as staff_fldlivingdate,s1.staff_fldcontent,s1.staff_fldexchangedate
+		FROM ssh_staffinfo s1
+		LEFT
+		JOIN sys_dict s2 ON s1.staff_flddept = s2.dict_fldid
+		LEFT JOIN sys_dict
+		s3 ON s1.staff_fldduty = s3.dict_fldid
+		WHERE 1=1
+		<if test="empCode!=null and empCode!='' ">
+			and s1.staff_fldpersoncode = #{empCode}
+		</if>
+
+		<if test="empName!=null and empName != '' ">
+			and s1.staff_fldpersonname = #{empName}
+		</if>
+
+		<if test="roomCode !=null and roomCode !='' ">
+			and s1.staff_fldroomcode = #{roomCode}
+		</if>
+
+		<if test="buildingName!=null and buildingName!='' ">
+			and s1.staff_fldbuild = #{buildingName}
+		</if>
+
+		<if test="dept!=null and dept.dictName!=''">
+			and s2.dict_fldname = '${dept.dictName}'
+		</if>
+
+		<if test="duty!=null and duty.dictName!=''">
+			and s3.dict_fldname = '${duty.dictName}'
+		</if>
+		
+		<if test="beginDate!=null and beginDate!='' and endDate!=null and endDate!=''">
+			and s1.staff_fldlivingdate between #{beginDate} and #{endDate}
+		</if>
+		and s1.staff_fldflag = 0
+		order by
+		s1.staff_fldbuild,s1.staff_fldroomcode
+	</select>
+
+
+	<select id="getRoomSutiation" resultMap="roomGoodsResultMap">
+		SELECT
+		t1.roomgoods_fldbuildname,t1.roomgoods_fldroomcode,t1.roomgoods_fldbednum,t1.roomgoods_fldwardrobenum,t1.roomgoods_flddesknum,t2.staff_fldshopboxnum,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldpersongender,decode(t3.dict_fldname,'1','无',t3.dict_fldname)
+		AS staff_flddeptname,decode(t4.dict_fldname,'0','无',t4.dict_fldname)
+		AS staff_flddutyname
+		FROM ssh_roomgoods t1
+		LEFT JOIN ssh_staffinfo t2 ON
+		t1.roomgoods_fldbuildname =
+		t2.staff_fldbuild AND
+		t1.roomgoods_fldroomcode = t2.staff_fldroomcode
+		AND
+		t1.roomgoods_fldbednum=t2.staff_fldbednum AND t2.staff_fldflag = 0
+		LEFT JOIN sys_dict t3 ON t2.staff_flddept = t3.dict_fldid
+		LEFT JOIN
+		sys_dict t4 ON t2.staff_fldduty = t4.dict_fldid
+		WHERE 1=1
+		<if test="roomCode !=null and roomCode !='' ">
+			and t1.roomgoods_fldroomcode = #{roomCode}
+		</if>
+
+		<if test="buildName!=null and buildName!='' ">
+			and t1.roomgoods_fldbuildname = #{buildName}
+		</if>
+
+		<if test="staff.dept!=null and staff.dept.dictName!=''">
+			and t3.dict_fldname = '${staff.dept.dictName}'
+		</if>
+
+		<if test="staff.duty!=null and staff.duty.dictName!=''">
+			and t4.dict_fldname ='${staff.duty.dictName}'
+		</if>
+		order by
+		t1.roomgoods_fldbuildname,t1.roomgoods_fldroomcode
+
+	</select>
+
+	<select id="getRoomSutiationByJingYa" resultMap="roomGoodsResultMap">
+		SELECT
+		t1.roomgoods_fldbuildname,t1.roomgoods_fldroomcode,t1.roomgoods_fldbednum,t1.roomgoods_fldwardrobenum,t1.roomgoods_flddesknum,t2.staff_fldshopboxnum,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldpersongender,decode(t3.dict_fldname,'1','无',t3.dict_fldname)
+		AS staff_flddeptname,decode(t4.dict_fldname,'0','无',t4.dict_fldname)
+		AS staff_flddutyname
+		FROM ssh_roomgoods t1
+		LEFT JOIN ssh_staffinfo t2 ON
+		t1.roomgoods_fldbuildname =
+		t2.staff_fldbuild AND
+		t1.roomgoods_fldroomcode = t2.staff_fldroomcode
+		AND
+		t1.roomgoods_fldbednum=t2.staff_fldbednum AND t2.staff_fldflag = 0
+		LEFT JOIN sys_dict t3 ON t2.staff_flddept = t3.dict_fldid
+		LEFT JOIN
+		sys_dict t4 ON t2.staff_fldduty = t4.dict_fldid
+		WHERE 1=1 and t1.roomgoods_fldbuildname = '静雅苑'
+		and t1.roomgoods_fldroomcode
+		in
+		<foreach collection="list" item="string" index="index" open="("
+			separator="," close=")">
+			#{string}
+		</foreach>
+
+		order by
+		t1.roomgoods_fldbuildname,t1.roomgoods_fldroomcode,t1.roomgoods_fldbednum
+
+	</select>
+
+	<select id="getRoomSutiationByWenBo" resultMap="roomGoodsResultMap">
+		SELECT
+		t1.roomgoods_fldbuildname,t1.roomgoods_fldroomcode,t1.roomgoods_fldbednum,t1.roomgoods_fldwardrobenum,t1.roomgoods_flddesknum,t2.staff_fldshopboxnum,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldpersongender,decode(t3.dict_fldname,'1','无',t3.dict_fldname)
+		AS staff_flddeptname,decode(t4.dict_fldname,'0','无',t4.dict_fldname)
+		AS staff_flddutyname
+		FROM ssh_roomgoods t1
+		LEFT JOIN ssh_staffinfo t2 ON
+		t1.roomgoods_fldbuildname =
+		t2.staff_fldbuild AND
+		t1.roomgoods_fldroomcode = t2.staff_fldroomcode
+		AND
+		t1.roomgoods_fldbednum=t2.staff_fldbednum AND t2.staff_fldflag = 0
+		LEFT JOIN sys_dict t3 ON t2.staff_flddept = t3.dict_fldid
+		LEFT JOIN
+		sys_dict t4 ON t2.staff_fldduty = t4.dict_fldid
+		WHERE 1=1 and t1.roomgoods_fldbuildname = '闻博轩'
+		and t1.roomgoods_fldroomcode
+		in
+		<foreach collection="list" item="string" index="index" open="("
+			separator="," close=")">
+			#{string}
+		</foreach>
+
+		order by
+		t1.roomgoods_fldbuildname,t1.roomgoods_fldroomcode,t1.roomgoods_fldbednum
+
+	</select>
+
+	<select id="getCheckoutStaffs" resultMap="staffResultMap">
+		SELECT
+		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,decode(s2.dict_fldname,'1','无',s2.dict_fldname)
+		AS staff_flddeptname,decode(s3.dict_fldname,'0','无',s3.dict_fldname)
+		AS staff_flddutyname
+		,s1.staff_fldbuild,s1.staff_fldroomcode,s1.staff_fldbednum,s1.staff_fldwardrobenum,s1.staff_flddesknum,s1.staff_fldshopboxnum,s1.staff_fldlivingdate
+		as staff_fldlivingdate,s1.staff_fldcheckoutdate,s1.staff_fldcontent
+		FROM ssh_staffinfo s1
+		LEFT
+		JOIN sys_dict s2 ON s1.staff_flddept =
+		s2.dict_fldid
+		LEFT JOIN sys_dict
+		s3 ON s1.staff_fldduty = s3.dict_fldid
+		WHERE 1=1
+
+		<if test="param1 !=null and param1 !='' ">
+			and s1.staff_fldroomcode = #{param1}
+		</if>
+
+		<if test="param2!=null and param2!='' ">
+			and s1.staff_fldbuild = #{param2}
+		</if>
+
+		<if test="param3!=null and param3!='' and param4!=null and param4!='' ">
+			and s1.staff_fldcheckoutdate between #{param3} and #{param4}
+		</if>
+		
+		<if test="param5!=null and param5!='' and param6!=null and param6!='' ">
+			and s1.staff_fldlivingdate between #{param5} and #{param6}
+		</if>
+		
+		<if test="param7!=null and param7!='' and param8!=null and param8!='' ">
+			and s1.staff_fldexchangedate between #{param7} and #{param8}
+		</if>
+		
+		and s1.staff_fldflag = 1
+		order by
+		s1.staff_fldbuild,s1.staff_fldroomcode
+	</select>
+	
+	<select id="getAllStaffs" resultMap="roomGoodsResultMap">
+	
+	SELECT
+    t1.roomgoods_fldbuildname,t1.roomgoods_fldroomcode,t1.roomgoods_fldbednum,t1.roomgoods_fldwardrobenum,t1.roomgoods_flddesknum,t2.staff_fldshopboxnum,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldpersongender,decode(t3.dict_fldname,'1','无',t3.dict_fldname)
+    AS staff_flddeptname,decode(t4.dict_fldname,'0','无',t4.dict_fldname)
+    AS staff_flddutyname,t5.roomset_fldcontent,t5.roomset_fldcontent2,t5.roomset_fldsize,t5.roomset_fldocc,t5.roomset_fldcontent3,t5.roomset_fldclassify
+    FROM ssh_roomgoods t1
+    LEFT JOIN ssh_staffinfo t2 ON
+    t1.roomgoods_fldbuildname =
+    t2.staff_fldbuild AND
+    t1.roomgoods_fldroomcode = t2.staff_fldroomcode
+    AND
+    t1.roomgoods_fldbednum=t2.staff_fldbednum AND t2.staff_fldflag = 0
+    LEFT JOIN sys_dict t3 ON t2.staff_flddept = t3.dict_fldid
+    LEFT JOIN
+    sys_dict t4 ON t2.staff_fldduty = t4.dict_fldid 
+    LEFT JOIN ssh_roomset t5 ON t1.roomgoods_fldbuildname = t5.roomset_fldbuildname AND t1.roomgoods_fldroomcode = t5.roomset_fldroomcode
+   	order by
+	t1.roomgoods_fldbuildname,t1.roomgoods_fldroomcode,t1.roomgoods_fldbednum
+		
+	</select>
+	
+	<select id="getStaffsCountByBlur" resultMap="staffResultMap">
+		
+		SELECT
+		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,decode(s2.dict_fldname,'1','无',s2.dict_fldname)
+		AS staff_flddeptname,decode(s3.dict_fldname,'0','无',s3.dict_fldname)
+		AS staff_flddutyname
+		,s1.staff_fldbuild,s1.staff_fldroomcode,s1.staff_fldbednum,s1.staff_fldwardrobenum,s1.staff_flddesknum,s1.staff_fldshopboxnum,s1.staff_fldlivingdate
+		as staff_fldlivingdate,s1.staff_fldcontent
+		FROM ssh_staffinfo s1
+		LEFT
+		JOIN sys_dict s2 ON s1.staff_flddept = s2.dict_fldid
+		LEFT JOIN sys_dict
+		s3 ON s1.staff_fldduty = s3.dict_fldid
+		WHERE 1=1
+		<if test="empCode!=null and empCode!='' ">
+			and s1.staff_fldpersoncode = #{empCode}
+		</if>
+
+		<if test="empName!=null and empName != '' ">
+			and s1.staff_fldpersonname = #{empName}
+		</if>
+
+		<if test="roomCode !=null and roomCode !='' ">
+			and s1.staff_fldroomcode = #{roomCode}
+		</if>
+
+		<if test="buildingName!=null and buildingName!='' ">
+			and s1.staff_fldbuild = #{buildingName}
+		</if>
+
+		<if test="dept!=null and dept.dictName!=''">
+			and s2.dict_fldname = '${dept.dictName}'
+		</if>
+
+		<if test="duty!=null and duty.dictName!=''">
+			and s3.dict_fldname = '${duty.dictName}'
+		</if>
+		
+		<if test="beginDate!=null and beginDate!='' and endDate!=null and endDate!=''">
+			and s1.staff_fldlivingdate between #{beginDate} and #{endDate}
+		</if>
+		and s1.staff_fldflag = 0
+		order by
+		s1.staff_fldbuild,s1.staff_fldroomcode
+	
+	</select>
+
+</mapper> 

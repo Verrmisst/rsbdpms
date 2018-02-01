@@ -157,7 +157,6 @@
 }
 span.img {
     float: left;
-    margin-top: 16px;
     margin-right: 10px;
     cursor: pointer;
 }
@@ -205,7 +204,7 @@ span.img {
 }
 
 .title{
-	width: 200px;
+	width: 230px;
     float: left;
     line-height: 70px;
     color: white;

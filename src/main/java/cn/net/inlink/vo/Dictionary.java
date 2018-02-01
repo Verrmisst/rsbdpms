@@ -49,6 +49,11 @@ public class Dictionary {
 	public void setDictType(String dictType) {
 		this.dictType = dictType;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Dictionary [id=" + id + ", dictName=" + dictName
+				+ ", dictType=" + dictType + "]";
+	}
 	
 }

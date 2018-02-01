@@ -18,4 +18,13 @@ public interface UploadStaffService {
 	
 	//增加科室职务信息
 	public void saveDeptDuty(UploadDeptDuty deptDuty);
+	
+	//查询员工是否存在
+	public long queryStaff(String staffCode);
+	
+	//查询退宿员工是否存在
+	public long queryCOStaff(String staffCode);
+	
+	//删除退宿员工
+	public void deleCOStaff(String staffCode);
 }

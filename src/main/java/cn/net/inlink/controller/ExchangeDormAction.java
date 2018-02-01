@@ -1,5 +1,6 @@
 package cn.net.inlink.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.net.inlink.service.DormManaService;
 import cn.net.inlink.service.StaffManaService;
 import cn.net.inlink.vo.UploadRoom;
+import cn.net.inlink.vo.UploadStaff;
 
 /**
  * 入住人员调宿的控制器
@@ -151,9 +153,12 @@ public class ExchangeDormAction {
 		this.livingDate = livingDate;
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public String execute() {
-		//判断入住时间是否为null
+	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
+	public String execute()  {
+		
+		System.out.println(livingDate);
+		
+		//判断调宿时间是否为null
 		if(this.livingDate==null){//为null,赋值为系统时间
 			
 			this.livingDate = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
@@ -165,11 +170,23 @@ public class ExchangeDormAction {
 		}
 		
 		log.info("调宿员工:"+staffCode+"执行时间：" + new SimpleDateFormat().format(new Date()));
-
+		
+		
+		//this.build = new String(this.build.getBytes("iso-8859-1"), "utf-8");
+		
 		// 获取宿舍配置对象
+		
+		if(this.roomCode==null||this.roomCode.equals("")){
+			
+			this.text="请输入房间号";
+			
+			return "exchange error";
+		}
+		
 		UploadRoom roomset = dormService.queryRoomByCode(roomCode,
 				build);
-
+		
+		
 		// 判断已住人数和可住人数是否符合输入
 		if (roomset.getSize() == roomset.getOccupy()) {
 
@@ -181,12 +198,24 @@ public class ExchangeDormAction {
 		}
 
 		try {
+			
+			//获取到原来住宿的房间号和楼号
+			UploadStaff staff = service.queryStaffByCode(staffCode);
+			
+			String rc = staff.getRoomCode();
+			
+			String bn = staff.getBuildingName();
+			
+			//原宿舍已住人数-1
+			this.dormService.editOccupycut(rc, bn);
+			
+			
 			log.info("更新上传表");
 
 			this.service.staffExchange(staffCode, build, roomCode, bedNum,
 					wardrobeNum, deskNum, shopboxNum,livingDate);
 			
-			//更新宿舍配置表入住人数
+			//更新宿舍配置表入住人数调换后
 			this.dormService.editOccupy(roomCode, build);
 			
 			log.info("上传表更新完毕");
@@ -202,8 +231,8 @@ public class ExchangeDormAction {
 			return "exchange error";
 		}
 
-		/*
-		 * // 更新物品表，宿舍表 // 获取人员id Integer staffId =
+		
+		 /* // 更新物品表，宿舍表 // 获取人员id Integer staffId =
 		 * staffService.queryIdByEmpCode(staffCode).getId();
 		 * 
 		 * // 获取宿舍id Integer roomId =
@@ -230,5 +259,9 @@ public class ExchangeDormAction {
 		 * staffService.editGoods(roomId, shopboxNum, staffId, shoeboxId);
 		 */
 		return "exchange success";
+		
 	}
+
+	
+	
 }

@@ -80,16 +80,29 @@ public class StaffManaServiceImpl implements StaffManaService {
 	}
 	
 	//持久化物品信息
-	@Override
+	/*@Override
 	public void saveGoods(Integer typeId,String code,Integer roomId,Integer empId) {
 		dao.insertIntoGoods(typeId,code,roomId,empId);
-	}
+	}*/
 	
 	//查询宿舍人员id
 	@Override
 	public Employee queryIdByEmpCode(String empCode) {
 		return dao.getEmpIdByCode(empCode);
 	}
+	
+	//查询退宿人员
+	@Override
+	public Employee queryCOEmpByEmpCode(String empCode) {
+		return dao.getCOEmpIdByCode(empCode);
+	}
+	
+	//删除退宿人员
+	@Override
+	public void deleCOEmpByCode(String empCode) {
+		dao.deleCOEmpByCode(empCode);
+	}
+	
 	
 	//查询房间id
 	@Override
@@ -106,16 +119,22 @@ public class StaffManaServiceImpl implements StaffManaService {
 
 	
 	//更新物品表
-	@Override
+	/*@Override
 	public void editGoods(Integer roomId, String goodsCode, Integer staffId,
 			Integer goodsType) {
 		dao.updateGoods(roomId, goodsCode, staffId, goodsType);
-	}
+	}*/
 	
 	//更新宿舍表
 	@Override
 	public void editRoom(String contnt1, String content2, String classify,
 			String roomCode,Integer buildId) {
 		dao.updateRoom(contnt1, content2, classify, roomCode,buildId);
+	}
+	
+	//查询科室和职务
+	@Override
+	public List<Dictionary> queryDict(String dictType) {
+		return dao.getDeptOrDuty(dictType);
 	}
 }

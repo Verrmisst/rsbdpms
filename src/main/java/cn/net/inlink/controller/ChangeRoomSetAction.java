@@ -34,13 +34,16 @@ public class ChangeRoomSetAction {
 	private String content1;
 
 	private String content2;
+	
+	private String content3;
 
 	private String classify;
 
 	private String roomCode;
 	
 	private String buildId;
-
+	
+	private String size;
 	// 信息存储
 	private String text;
 
@@ -108,14 +111,32 @@ public class ChangeRoomSetAction {
 		this.buildId = buildId;
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+	
+	
+	public String getContent3() {
+		return content3;
+	}
+
+	public void setContent3(String content3) {
+		this.content3 = content3;
+	}
+
+	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
 	public String execute() {
+		
 		
 		// 更新配置表
 		try {
 			log.info("更新宿舍配置表");
 			this.dormService
-					.editRoomSet(content1, content2, classify, roomCode);
+					.editRoomSet(String.valueOf(size),classify,content1,content2,content3,roomCode);
 
 			log.info("更新宿舍表");
 			this.staffService

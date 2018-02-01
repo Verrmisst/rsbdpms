@@ -34,7 +34,7 @@
   
   <body>
   	<div class="box">
-	    <h1>请等待版本更新</h1>
+	    <h2>功能开发中...</h2>
     </div>
   </body>
 </html>

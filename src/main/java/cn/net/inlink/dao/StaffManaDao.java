@@ -3,6 +3,8 @@ package cn.net.inlink.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import cn.net.inlink.vo.Building;
@@ -45,6 +47,14 @@ public interface StaffManaDao {
 	//根据人员编号获取人员id
 	public Employee getEmpIdByCode(String empCode);
 	
+	//获取已入住人员id
+	public Employee getCOEmpIdByCode(String empCode);
+	
+	//删除已入住人员
+	@Delete("delete from ssh_person where person_fldflag=1 and person_fldcode = #{param}")
+	public void deleCOEmpByCode(String empCode);
+	
+	
 	//根据宿舍编号获取宿舍id
 	public Room getRoomIdByCode(String roomCode);
 	
@@ -61,4 +71,9 @@ public interface StaffManaDao {
 	//更新宿舍表
 	@Update("update ssh_room set room_fldcontent1=#{param1},room_fldcontent2=#{param2},room_fldclassify=#{param3} where room_fldcode = #{param4} and room_fldbuildid=#{param5}")
 	public void updateRoom(String content1,String content2,String classify,String roomCode,Integer buildId);
+	
+	
+	//查询字典表科室和职务的结果集
+	public List<Dictionary> getDeptOrDuty(String dictType);
+	
 }

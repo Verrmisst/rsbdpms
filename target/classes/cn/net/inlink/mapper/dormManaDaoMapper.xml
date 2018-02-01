@@ -15,9 +15,11 @@
 		<result property="deskNum" column="staff_flddesknum" />
 		<result property="shopboxNum" column="staff_fldshopboxnum" />
 		<result property="livingDate" column="staff_fldlivingdate" />
+		<result property="checkOutDate" column="staff_fldcheckoutdate" />
+		<result property="exchangeDate" column="staff_fldexchangedate" />
 		<result property="content" column="staff_fldcontent" />
-		
-		 <association property="dept" javaType="Dictionary">
+
+		<association property="dept" javaType="Dictionary">
 			<id property="id" column="dict_fldid" />
 			<result property="dictName" column="staff_flddeptname" />
 		</association>
@@ -25,49 +27,145 @@
 		<association property="duty" javaType="Dictionary">
 			<id property="id" column="dict_fldid" />
 			<result property="dictName" column="staff_flddutyname" />
-		</association> 
+		</association>
 
 	</resultMap>
-	
+
 	<resultMap type="UploadRoom" id="roomResultMap">
-		<id property="id" column="roomset_fldid"/>
-		<result property="buildName" column="roomset_fldbuildname"/>
-		<result property="roomCode" column="roomset_fldroomcode"/>
-		<result property="size" column="roomset_fldsize"/>
-		<result property="occupy" column="roomset_fldocc"/>
-		<result property="classify" column="roomset_fldclassify"/>
-		<result property="content1" column="roomset_fldcontent"/>
-		<result property="content2" column="roomset_fldcontent2"/>
+		<id property="id" column="roomset_fldid" />
+		<result property="buildName" column="roomset_fldbuildname" />
+		<result property="roomCode" column="roomset_fldroomcode" />
+		<result property="size" column="roomset_fldsize" />
+		<result property="occupy" column="roomset_fldocc" />
+		<result property="classify" column="roomset_fldclassify" />
+		<result property="content1" column="roomset_fldcontent" />
+		<result property="content2" column="roomset_fldcontent2" />
+		<result property="content3" column="roomset_fldcontent3" />
+	</resultMap>
+	
+	<resultMap type="RoomGoods" id="rmResultMap">
+		<id property="id" column="ROOMGOODS_FLDID" />
+		<result property="buildName" column="ROOMGOODS_FLDBUILDNAME" />
+		<result property="roomCode" column="ROOMGOODS_FLDROOMCODE" />
+		<result property="bedNum" column="ROOMGOODS_FLDBEDNUM" />
+		<result property="wardrobeNum" column="ROOMGOODS_FLDWARDROBENUM" />
+		<result property="deskNum" column="ROOMGOODS_FLDDESKNUM" />
+		<association property="staff" javaType="UploadStaff">
+			<id property="id" column="staff_fldid" />
+			<result property="empCode" column="staff_fldpersoncode" />
+			<result property="empName" column="staff_fldpersonname" />
+		</association>
 	</resultMap>
 	
 
 	<select id="getAllEmps" resultMap="staffResultMap">
 		SELECT
-		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,s2.dict_fldname
-		AS staff_flddeptname,s3.dict_fldname AS staff_flddutyname
-		,s1.staff_fldbuild,s1.staff_fldroomcode,s1.staff_fldbednum,s1.staff_fldwardrobenum,s1.staff_flddesknum,s1.staff_fldshopboxnum,s1.staff_fldlivingdate as staff_fldlivingdate,s1.staff_fldcontent
+		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,decode(s2.dict_fldname,'1','无',s2.dict_fldname)
+		AS staff_flddeptname,decode(s3.dict_fldname,'0','无',s3.dict_fldname)
+		AS staff_flddutyname
+		,s1.staff_fldbuild,s1.staff_fldroomcode,s1.staff_fldbednum,s1.staff_fldwardrobenum,s1.staff_flddesknum,s1.staff_fldshopboxnum,s1.staff_fldlivingdate
+		as staff_fldlivingdate,s1.staff_fldcontent,s1.staff_fldexchangedate
 		FROM ssh_staffinfo s1
-		LEFT JOIN sys_dict s2 ON s1.staff_flddept = s2.dict_fldid
-		LEFT JOIN sys_dict s3 ON s1.staff_fldduty = s3.dict_fldid
-		WHERE s1.staff_fldflag = 0 order by s1.staff_fldid
+		LEFT
+		JOIN sys_dict s2 ON s1.staff_flddept =
+		s2.dict_fldid
+		LEFT JOIN sys_dict
+		s3 ON s1.staff_fldduty = s3.dict_fldid
+		WHERE s1.staff_fldflag = 0 order
+		by
+		s1.staff_fldbuild,s1.staff_fldroomcode
 	</select>
-	
+
 	<select id="getStaffByCode" resultMap="staffResultMap">
 		SELECT
-		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,s2.dict_fldname
-		AS staff_flddeptname,s3.dict_fldname AS staff_flddutyname
+		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,decode(s2.dict_fldname,'1','无',s2.dict_fldname)
+		AS staff_flddeptname,decode(s3.dict_fldname,'0','无',s3.dict_fldname)
+		AS staff_flddutyname
 		,s1.staff_fldbuild,s1.staff_fldroomcode,s1.staff_fldbednum,s1.staff_fldwardrobenum,s1.staff_flddesknum,s1.staff_fldshopboxnum,s1.staff_fldlivingdate,s1.staff_fldcontent
 		FROM ssh_staffinfo s1
-		LEFT JOIN sys_dict s2 ON s1.staff_flddept = s2.dict_fldid
+		LEFT JOIN sys_dict s2 ON s1.staff_flddept =
+		s2.dict_fldid
 		LEFT JOIN sys_dict s3 ON s1.staff_fldduty = s3.dict_fldid
 		WHERE s1.staff_fldflag = 0 and s1.staff_fldpersoncode = #{param}
 	</select>
-	
+
 	<select id="getAllRooms" resultMap="roomResultMap">
-		select * from ssh_roomset where roomset_fldbuildname = #{param1}
+		select * from ssh_roomset
+		where roomset_fldbuildname = #{param1} order by roomset_fldroomcode
+	</select>
+
+	<select id="getRoomSetByCode" resultMap="roomResultMap">
+		select * from
+		ssh_roomset where roomset_fldroomcode=#{param1} and
+		roomset_fldbuildname=#{param2} order by roomset_fldroomcode
+	</select>
+
+	<select id="getEmpRomeSet" resultMap="staffResultMap">
+		SELECT
+		s.staff_fldbuild,s.staff_fldroomcode,s.staff_fldpersonname,s.staff_fldbednum,s.staff_fldwardrobenum,s.staff_flddesknum,s.staff_fldshopboxnum
+		,s1.dict_fldname as staff_flddeptname,s2.dict_fldname as
+		staff_flddutyname
+		FROM ssh_staffinfo s
+		left join sys_dict s1 on
+		s.staff_flddept = s1.dict_fldid
+		left join sys_dict s2 on
+		s.staff_fldduty = s2.dict_fldid
+		WHERE staff_fldbuild=#{param1} AND
+		staff_fldroomcode =#{param2} and staff_fldflag=0
+		order by
+		s.staff_fldbednum
+	</select>
+
+	<select id="getAllCheckouts" resultMap="staffResultMap">
+		SELECT
+		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,decode(s2.dict_fldname,'1','无',s2.dict_fldname)
+		AS staff_flddeptname,decode(s3.dict_fldname,'0','无',s3.dict_fldname)
+		AS staff_flddutyname
+		,s1.staff_fldbuild,s1.staff_fldroomcode,s1.staff_fldbednum,s1.staff_fldwardrobenum,s1.staff_flddesknum,s1.staff_fldshopboxnum,s1.staff_fldlivingdate
+		as staff_fldlivingdate,s1.staff_fldcheckoutdate,s1.staff_fldcontent,s1.staff_fldexchangedate
+		FROM ssh_staffinfo s1
+		LEFT
+		JOIN sys_dict s2 ON s1.staff_flddept =
+		s2.dict_fldid
+		LEFT JOIN sys_dict
+		s3 ON s1.staff_fldduty = s3.dict_fldid
+		WHERE s1.staff_fldflag = 1 order
+		by
+		s1.staff_fldbuild,s1.staff_fldroomcode
+	</select>
+
+	<select id="getAllCheckoutsNoPaging" resultMap="staffResultMap">
+		SELECT
+		s1.staff_fldid,s1.staff_fldpersoncode,s1.staff_fldpersonname,s1.staff_fldpersongender,decode(s2.dict_fldname,'1','无',s2.dict_fldname)
+		AS staff_flddeptname,decode(s3.dict_fldname,'0','无',s3.dict_fldname)
+		AS staff_flddutyname
+		,s1.staff_fldbuild,s1.staff_fldroomcode,s1.staff_fldbednum,s1.staff_fldwardrobenum,s1.staff_flddesknum,s1.staff_fldshopboxnum,s1.staff_fldlivingdate
+		as staff_fldlivingdate,s1.staff_fldcheckoutdate,s1.staff_fldcontent
+		FROM ssh_staffinfo s1
+		LEFT
+		JOIN sys_dict s2 ON s1.staff_flddept =
+		s2.dict_fldid
+		LEFT JOIN sys_dict
+		s3 ON s1.staff_fldduty = s3.dict_fldid
+		WHERE s1.staff_fldflag = 1 order
+		by
+		s1.staff_fldbuild,s1.staff_fldroomcode
 	</select>
 	
-	<select id="getRoomSetByCode" resultMap="roomResultMap">
-		select * from ssh_roomset where roomset_fldroomcode=#{param1} and roomset_fldbuildname=#{param2}
+	<select id="getSurplusGoods" resultMap="rmResultMap">
+		SELECT
+    t1.roomgoods_fldbuildname,t1.roomgoods_fldroomcode,t1.roomgoods_fldbednum,t1.roomgoods_fldwardrobenum,t1.roomgoods_flddesknum,
+    t2.staff_fldshopboxnum,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldpersongender
+    FROM ssh_roomgoods t1
+    LEFT JOIN ssh_staffinfo t2 ON
+    t1.roomgoods_fldbuildname =
+    t2.staff_fldbuild AND
+    t1.roomgoods_fldroomcode = t2.staff_fldroomcode
+    AND
+    t1.roomgoods_fldbednum=t2.staff_fldbednum AND t2.staff_fldflag = 0
+    WHERE t2.staff_fldpersoncode IS NULL
+		and t1.roomgoods_fldbuildname=#{param1} and t1.roomgoods_fldroomcode = #{param2}
+	order by t1.roomgoods_fldbednum
 	</select>
+
 </mapper> 

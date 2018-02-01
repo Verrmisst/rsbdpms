@@ -53,7 +53,7 @@
 
 		<!-- 显示单独录入页面 -->
 		<action name="showSingle" class="cn.net.inlink.controller.ShowSingleTypeinAction">
-			<result name="show single">/jsp/singletypein.jsp</result>
+			<result name="show single">/jsp/singletypein_parent.jsp</result>
 		</action>
 
 		<!-- 显示总务excel录入页面 -->
@@ -64,6 +64,16 @@
 		<!-- 显示总务录入页面 -->
 		<action name="showmanapage" class="cn.net.inlink.controller.ShowManaPageAction">
 			<result name="show success">jsp/affairstypein.jsp</result>
+		</action>
+		
+		<!-- 新员工录入 -->
+		<action name="shownewman" class="cn.net.inlink.controller.ShowNewSingleTypeIn">
+			<result name="success">jsp/singletypein_newemp.jsp</result>
+		</action>
+		
+		<!-- 老员工录入 -->
+		<action name="showoldman" class="cn.net.inlink.controller.ShowOldSingleTypeIn">
+			<result name="success">jsp/singletypein_oldemp.jsp</result>
 		</action>
 		
 		<!-- 显示人事excel录入页面 -->
@@ -87,6 +97,11 @@
 			<result name="error">/WEB-INF/jsp/error.jsp</result>
 		</action>
 		
+		<!-- 显示入住人员初始化页面 -->
+		<action name="showorigindorm" class="cn.net.inlink.controller.ShowDormAction">
+			<result name="success">jsp/changedormorigin.jsp</result>
+		</action>
+		
 		
 		<!-- 显示入住人员信息 -->
 		<action name="showpagingdorm" class="cn.net.inlink.controller.DormPagingAction">
@@ -95,21 +110,49 @@
 		</action>
 		
 		<!-- 显示查询出的信息 -->
-		<action name="showstaffdorm" class="cn.net.inlink.controller.QueryStaffAction">
+		<!-- <action name="showstaffdorm" class="cn.net.inlink.controller.QueryStaffAction">
 			<result name="show success">jsp/changedorm-single.jsp</result>
 			<result name="show error">/WEB-INF/jsp/error.jsp</result>
+		</action> -->
+		
+		<!-- 显示已退宿人员信息 -->
+		<action name="checkoutpage" class="cn.net.inlink.controller.CheckOutPagingAction">
+			<result name="success">/jsp/personcheckout.jsp</result>
+			<result name="error">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
+		<!-- 多条件查询退宿人员信息 -->
+		<action name="blursearchcheckout" class="cn.net.inlink.controller.QueryCheckOutAction">
+			<result name="success">/jsp/searchcheckout.jsp</result>
+			<result name="error">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
+		<!-- 模糊查询显示员工信息 -->
+		<action name="showblurstaff" class="cn.net.inlink.controller.BlurSearchStaffAction" method="search">
+			<result name="error">/WEB-INF/jsp/errorfordorm.jsp</result>
+			<result name="success">jsp/changedormsearch.jsp</result>
+		</action>
+		
+		<!-- 分页多条件查询员工信息 -->
+		<action name="pageblurstaff" class="cn.net.inlink.controller.BlurSearchStaffAction" method="pageDorm">
+			<result name="success">jsp/dormpagingblur.jsp</result>			
 		</action>
 
 		<!-- 显示借用信息 -->
 		<action name="showborrow" class="cn.net.inlink.controller.ShowBorrowAction">
-			<result name="show success">/WEB-INF/jsp/nextversion.jsp</result>
+			<result name="show success">jsp/personborrow.jsp</result>
 		</action>
 
 		<!-- 显示通报信息 -->
 		<action name="shownotifice" class="cn.net.inlink.controller.ShowNotificationAction">
-			<result name="show success">/WEB-INF/jsp/nextversion.jsp</result>
+			<result name="success">jsp/personnotification.jsp</result>
 		</action>
-
+		
+		<!-- 通报分页 -->
+		<action name="notificepaging" class="cn.net.inlink.controller.NotificationPagingAction">
+			<result name="show success">jsp/personnotificationstart.jsp</result>
+			<result name="show error">/WEB-INF/jsp/error.jsp</result>
+		</action>
 
 		<!-- 修改密码 -->
 		<action name="editpass" class="cn.net.inlink.controller.ChangePasswordAction">
@@ -117,11 +160,18 @@
 			<result name="edit error">/WEB-INF/jsp/error.jsp</result>
 		</action>
 
-		<!-- 单个录入 -->
-		<action name="singletypein" class="cn.net.inlink.controller.SingleTypeinAction">
-			<result name="insert success">/jsp/singletypein.jsp</result>
+		<!-- 单个录入新员工 -->
+		<action name="singletypeinnew" class="cn.net.inlink.controller.SingleTypeinNewAction">
+			<result name="insert success" type="redirectAction">shownewman</result>
 			<result name="insert error">/WEB-INF/jsp/error.jsp</result>
 		</action>
+		
+		<!-- 单个录入老员工 -->
+		<action name="singletypeinold" class="cn.net.inlink.controller.SingleTypeinOldAction">
+			<result name="insert success" type="redirectAction">showoldman</result>
+			<result name="insert error">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
 
 		<!-- 上传操作 -->
 		<!-- 【注意】 fileUpload拦截器应设置在defaultStack之前 -->
@@ -147,6 +197,32 @@
 			<result name="errorInfo">/WEB-INF/jsp/error.jsp</result>
 		</action>
 		
+		<action name="download" class="cn.net.inlink.controller.DownloadAction">
+            <result name="download" type="stream">
+                 <!-- 下载文件类型定义 -->
+                 <param name="contentType">application/octet-stream </param>
+                 <!-- 下载文件输出流定义 -->
+                 <param name="inputName">inputStream</param>　　　　　　　　　　　　　　　　　　
+                 <!-- 下载文件处理方式 --> 　　　　　　　　　　　　　　　　
+                 <param name="contentDisposition">attachment;fileName="checkoutstaff.xls"</param>
+                 <!-- 下载文件的缓冲大小 -->
+                 <param name="bufferSize">4096</param>
+            </result>
+        </action>
+		
+		<action name="downloadall" class="cn.net.inlink.controller.DownloadAllStaffsAction">
+            <result name="download" type="stream">
+                 <!-- 下载文件类型定义 -->
+                 <param name="contentType">application/octet-stream </param>
+                 <!-- 下载文件输出流定义 -->
+                 <param name="inputName">inputStream</param>　　　　　　　　　　　　　　　　　　
+                 <!-- 下载文件处理方式 --> 　　　　　　　　　　　　　　　　
+                 <param name="contentDisposition">attachment;fileName="allstaffs.xls"</param>
+                 <!-- 下载文件的缓冲大小 -->
+                 <param name="bufferSize">1024000</param>
+            </result>
+        </action>
+		
 		<!-- 更新员工部门和职务信息 -->
 		<action name="staffmanager" class="cn.net.inlink.controller.StaffManagerAction">
 			<result name="update success" >/jsp/personnel.jsp</result>
@@ -155,8 +231,10 @@
 		
 		<!-- 员工退宿 -->
 		<action name="checkout" class="cn.net.inlink.controller.StaffCheckOutAction">
-			<result name="checkout success" type="chain">showpagingdorm</result>
+			<result name="checkout success" type="redirectAction">showblurstaff</result>
 			<result name="checkout error">/WEB-INF/jsp/error.jsp</result>
+			<!-- <result name="checkout success" type="json"></result>
+			<result name="checkout error" type="json"></result> -->
 		</action>
 		
 		<!-- 员工调宿 -->
@@ -190,6 +268,62 @@
 			<result name="update success" type="chain">builddorm</result>
 			<result name="update error">/WEB-INF/jsp/error.jsp</result>
 		</action>
+	
+		<!-- 显示宿舍床位情况 -->
+		<action name="showroomsituation" class="cn.net.inlink.controller.QueryEmpRoomSetAction">
+			<result name="show error">/WEB-INF/jsp/errorforsearch.jsp</result>
+			<result name="show success">/jsp/roomsituation.jsp</result>
+		</action>
+	
+		<!-- 增加宿舍信息 -->
+		<action name="saveroom" class="cn.net.inlink.controller.AddRoomAction">
+			<result name="save error">/WEB-INF/jsp/error.jsp</result>
+			<result name="save success">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
+		<!-- 增加借用信息 -->
+		<action name="saveborrow" class="cn.net.inlink.controller.AddBorrowRecordAction">
+			<result name="insert error" type="json"></result>
+			<result name="insert success" type="json"></result>
+		</action>
+
+	
+		<!-- 显示未归还记录 -->
+		<action name="nogiveback" class="cn.net.inlink.controller.BorrowPagingAction" method="noGiveBack">
+			<result name="show error">/WEB-INF/jsp/errorforsearch.jsp</result>
+			<result name="show success">jsp/personborrow-nogiveback.jsp</result>
+		</action> 
+		
+		<!-- 显示归还记录 -->
+		<action name="giveback" class="cn.net.inlink.controller.BorrowPagingAction" method="giveBack">
+			<result name="show error">/WEB-INF/jsp/errorforsearch.jsp</result>
+			<result name="show success">jsp/personborrow-giveback.jsp</result>
+		</action> 
+		
+		<!-- 物品归还 -->
+		<action name="objectreturn" class="cn.net.inlink.controller.ObjectGiveBackAction">
+			<result name="giveback error" type="json"></result>
+			<result name="giveback success" type="json"></result>
+		</action>
+		
+		<!-- 查询借用信息 -->
+		<action name="searchborrow" class="cn.net.inlink.controller.SearchBorrowInfoAction">
+			<result name="success">jsp/personborrow-single.jsp</result>
+			<result name="error">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
+		<!-- 增加通报信息 -->
+		<action name="savenotification" class="cn.net.inlink.controller.AddNotificationRecordAction">
+			<result name="insert error" type="json"></result>
+			<result name="insert success" type="json"></result>
+		</action>
+		
+		<!-- 查询通报信息 -->
+		<action name="searchnotifice" class="cn.net.inlink.controller.SearchNotificeInfoAction">
+			<result name="success">jsp/personnotification-single.jsp</result>
+			<result name="error">/WEB-INF/jsp/error.jsp</result>
+		</action>
+		
 	</package>
 
 </struts>

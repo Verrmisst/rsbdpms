@@ -62,10 +62,10 @@ public class QueryStaffAction {
 		this.staffCode = staffCode;
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
 	public String execute(){
 		 
-		this.staff = service.queryStaffByCode(staffCode);
+		this.staff = service.queryStaffByCode(staffCode.trim());
 		
 		if(this.staff==null){
 			

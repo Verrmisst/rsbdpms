@@ -28,7 +28,7 @@
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
-			<value>classpath:cn/net/inlink/config/db-mysql.properties</value>
+			<value>classpath:cn/net/inlink/config/db-connect.properties</value>
 		</property>
 	</bean>
 
@@ -88,6 +88,18 @@
 	<bean id="dormManaService" class="cn.net.inlink.service.DormManaServiceImpl">
 		<property name="dao" ref="dormManaDao" />
 	</bean>
+	
+	<bean id="staffBorrowService" class="cn.net.inlink.service.StaffBorrowServiceImpl">
+		<property name="dao" ref="staffBorrowDao" />
+	</bean>
+	
+	<bean id="staffNotificationService" class="cn.net.inlink.service.StaffNotificationServiceImpl">
+		<property name="dao" ref="staffNotificationDao" />
+	</bean>
+	
+	<bean id="blurSearchService" class="cn.net.inlink.service.BlurSearchServiceImpl">
+		<property name="dao" ref="blurSearchDao" />
+	</bean>
 
 
 	<!-- 配置事务管理器，注意这里的dataSource和SqlSessionFactoryBean的dataSource要一致，不然事务就没有作用了 -->
@@ -96,7 +108,10 @@
 		<property name="dataSource" ref="dbcppool" />
 
 	</bean>
-
+	
+	 <!-- 开启注解事务 -->
+<!-- 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+ -->	
 
 	<!-- 配置事务的传播特性 -->
 	<bean id="baseTransactionProxy"

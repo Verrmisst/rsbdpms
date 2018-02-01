@@ -1,13 +1,23 @@
 package cn.net.inlink.controller;
 
+import java.io.InputStream;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.apache.ibatis.session.RowBounds;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.net.inlink.poi.DownloadAllStaffs;
+import cn.net.inlink.service.BlurSearchService;
 import cn.net.inlink.service.DormManaService;
+import cn.net.inlink.service.StaffManaService;
+import cn.net.inlink.vo.Dictionary;
+import cn.net.inlink.vo.RoomGoods;
 import cn.net.inlink.vo.UploadStaff;
 
 /**
@@ -17,12 +27,18 @@ import cn.net.inlink.vo.UploadStaff;
  * 
  */
 @Service(value = "dormManaService")
-@Transactional(rollbackFor = Exception.class)
+@Scope("prototype")
 public class DormPagingAction {
 
 	// 属性依赖
 	@Autowired
 	private DormManaService service;
+
+	@Autowired
+	private StaffManaService staffService;
+
+	@Autowired
+	private BlurSearchService blurService;
 
 	// 页码，初始化为0
 	private int pageNum = 0;
@@ -35,6 +51,12 @@ public class DormPagingAction {
 
 	// 信息文本
 	private String text;
+
+	// 职务
+	private List<Dictionary> dutys;
+
+	// 科室
+	private List<Dictionary> depts;
 
 	// 人员入住信息集合
 	private List<UploadStaff> staffs;
@@ -86,9 +108,47 @@ public class DormPagingAction {
 	public void setStaffs(List<UploadStaff> staffs) {
 		this.staffs = staffs;
 	}
-	
-	@Transactional(rollbackFor = Exception.class)
+
+	public List<Dictionary> getDutys() {
+		return dutys;
+	}
+
+	public void setDutys(List<Dictionary> dutys) {
+		this.dutys = dutys;
+	}
+
+	public List<Dictionary> getDepts() {
+		return depts;
+	}
+
+	public void setDepts(List<Dictionary> depts) {
+		this.depts = depts;
+	}
+
+	public StaffManaService getStaffService() {
+		return staffService;
+	}
+
+	public void setStaffService(StaffManaService staffService) {
+		this.staffService = staffService;
+	}
+
+	public BlurSearchService getBlurService() {
+		return blurService;
+	}
+
+	public void setBlurService(BlurSearchService blurService) {
+		this.blurService = blurService;
+	}
+
+	@Transactional(rollbackFor = { RuntimeException.class, Exception.class })
 	public String execute() {
+
+		// 获取科室和职务集合
+		this.depts = this.staffService.queryDict("科室");
+
+		this.dutys = this.staffService.queryDict("勤务");
+
 		// 分页参数：跳过几行，
 		/*
 		 * offest的值和页码相关，每页记录数*页码
@@ -96,7 +156,7 @@ public class DormPagingAction {
 		int offest;
 
 		// 分页参数：取几行，初始化为10
-		int limit = 15;
+		int limit = 13;
 
 		offest = limit * this.pageNum;
 
@@ -117,7 +177,22 @@ public class DormPagingAction {
 
 			return "show error";
 		}
+
+		/*// 获取文件输入流
+		InputStream fis = QueryCheckOutAction.class.getClassLoader()
+				.getResourceAsStream("cn/net/inlink/excel/allstaffs.xls");
+
+		// 获取上下文对象
+		ServletContext context = ServletActionContext.getServletContext();
+
+		List<RoomGoods> goods_staffs = blurService.queryAllStaffs();
 		
+		// 生成excel文件
+		try {
+			DownloadAllStaffs.exportAllStaffInfo(fis, goods_staffs, context);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
 		return "show dorm";
 	}
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.net.inlink.dao.StaffBorrowDao">
+
+	<resultMap type="StaffBorrow" id="borrowResultMap">
+		<id property="id" column="BORROW_FLDID" />
+		<result property="objectName" column="BORROW_FLDOBJECTNAME" />
+		<result property="beginDate" column="BORROW_FLDBEGINDATE" />
+		<result property="endDate" column="BORROW_FLDENDDATE" />
+		<result property="content" column="BORROW_FLDCONTENT" />
+		<result property="flag" column="BORROW_FLDFLAG" />
+
+		<association property="staff" javaType="UploadStaff">
+			<id property="id" column="STAFF_FLDID" />
+			<result property="empCode" column="STAFF_FLDPERSONCODE" />
+			<result property="empName" column="STAFF_FLDPERSONNAME" />
+			<result property="buildingName" column="STAFF_FLDBUILD" />
+			<result property="roomCode" column="STAFF_FLDROOMCODE" />
+			<association property="dept" javaType="Dictionary">
+				<id property="id" column="dict_fldid" />
+				<result property="dictName" column="staff_flddeptname" />
+			</association>
+
+		</association>
+	</resultMap>
+
+	<select id="getBorrowByCode" resultMap="borrowResultMap">
+		select
+		t1.borrow_fldid,t1.borrow_fldobjectname,t1.borrow_fldbegindate,t1.borrow_fldenddate,t1.borrow_fldcontent,t1.borrow_fldflag
+		,t2.staff_fldid,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldbuild,t2.staff_fldroomcode,
+		t3.dict_fldname as staff_flddeptname
+		from ssh_borrow t1
+		left join
+		ssh_staffinfo t2 on t1.borrow_fldpersonid = t2.staff_fldid
+		left join
+		sys_dict t3 on t2.staff_flddept = t3.dict_fldid
+		where
+		t2.staff_fldpersoncode = #{param} order by t1.borrow_fldbegindate
+	</select>
+
+	<select id="getAllGiveBackBorrows" resultMap="borrowResultMap">
+		select
+		t1.borrow_fldid,t1.borrow_fldobjectname,t1.borrow_fldbegindate,t1.borrow_fldenddate,t1.borrow_fldcontent,t1.borrow_fldflag
+		,t2.staff_fldid,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldbuild,t2.staff_fldroomcode
+		,t3.dict_fldname as staff_flddeptname
+		from ssh_borrow t1
+		left join
+		ssh_staffinfo t2 on t1.borrow_fldpersonid = t2.staff_fldid
+		left join
+		sys_dict t3 on t2.staff_flddept = t3.dict_fldid
+		where
+		t1.borrow_fldflag=1 order by t1.borrow_fldbegindate
+	</select>
+
+	<select id="getAllNoGiveBackBorrows" resultMap="borrowResultMap">
+		select
+		t1.borrow_fldid,t1.borrow_fldobjectname,t1.borrow_fldbegindate,t1.borrow_fldenddate,t1.borrow_fldflag
+		,t2.staff_fldid,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldbuild,t2.staff_fldroomcode
+		,t3.dict_fldname as staff_flddeptname
+		from ssh_borrow t1
+		left join
+		ssh_staffinfo t2 on t1.borrow_fldpersonid = t2.staff_fldid
+		left join
+		sys_dict t3 on t2.staff_flddept = t3.dict_fldid
+		where
+		t1.borrow_fldflag=0 order by t1.borrow_fldbegindate
+	</select>
+
+	<select id="getCountByCode">
+		SELECT COUNT(*) FROM (
+			select
+		t1.borrow_fldid,t1.borrow_fldobjectname,t1.borrow_fldbegindate,t1.borrow_fldenddate,t1.borrow_fldcontent,t1.borrow_fldflag
+		,t2.staff_fldid,t2.staff_fldpersoncode,t2.staff_fldpersonname,t2.staff_fldbuild,t2.staff_fldroomcode,
+		t3.dict_fldname as staff_flddeptname
+		from ssh_borrow t1
+		left join ssh_staffinfo t2 on t1.borrow_fldpersonid = t2.staff_fldid
+		left join sys_dict t3 on t2.staff_flddept = t3.dict_fldid
+		where t2.staff_fldpersoncode =#{param} order by t1.borrow_fldbegindate)
+
+	</select>
+
+</mapper> 

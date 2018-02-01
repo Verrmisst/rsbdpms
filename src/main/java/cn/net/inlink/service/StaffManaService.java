@@ -41,14 +41,21 @@ public interface StaffManaService {
 	public void editRommBuildId(Integer buildId,String roomCode);
 	
 	//持久化物品信息
-	public void saveGoods(Integer typeId,String code,Integer roomId,Integer empId);
+	//public void saveGoods(Integer typeId,String code,Integer roomId,Integer empId);
 	
 	//更新物品信息
 	@Update("UPDATE ssh_goods SET goods_fldroomid =#{param1} ,goods_fldcode =#{param2} WHERE goods_fldperson =#{param3} AND goods_fldtype=#{param4} ")
-	public void editGoods(Integer roomId,String goodsCode,Integer staffId,Integer goodsType);
+	//public void editGoods(Integer roomId,String goodsCode,Integer staffId,Integer goodsType);
 	
 	//查询人员id，根据编号
 	public Employee queryIdByEmpCode(String empCode);
+	
+	//查询退宿人员
+	public Employee queryCOEmpByEmpCode(String empCode);
+	
+	//删除退宿人员
+	public void deleCOEmpByCode(String empCode);
+
 	
 	//查询宿舍id，根据宿舍编号
 	public Room queryIdByRoomCode(String roomCode);
@@ -58,4 +65,7 @@ public interface StaffManaService {
 	
 	//更新宿舍表
 	public void editRoom(String content1,String content2,String classify,String roomCode,Integer buildId);
-}
+
+	//查询科室和职务结果集
+	public List<Dictionary> queryDict(String dictType);
+ }

@@ -110,39 +110,21 @@ $(function() {
 
 	
 //	添加借用提交按钮判断	
-	$("#tjty").submit(function(){
+	/*$("#tjty").click(function(){
 		var inputs=$("#jy input",window.parent.document);
 		var ygbh=inputs[0].value;
-		var xm=inputs[1].value;
-		var ks=inputs[2].value;
-		var fjh=inputs[3].value;
 		var jywp=inputs[4].value;
-		var jysj=inputs[5].value;
 		if(ygbh==""){
-			alert("员工编号不能为空！");
+			alert("请填写员工编号");
 			 return false;
 		}
-		if(xm==""){
-			alert("姓名不能为空！");
-			 return false;
-		}
-		if(ks==""){
-			alert("科室不能为空！");
-			 return false;
-		}
-		if(fjh==""){
-			alert("房间号不能为空！");
-			 return false;
-		}
+		
 		if(jywp==""){
-			alert("借用物品不能为空！");
+			alert("请填写借用物品");
 			 return false;
 		}
-		if(jysj==""){
-			alert("借用时间不能为空！");
-			 return false;
-		}
-	});
+		
+	});*/
 //	修改密码修改按钮判断
 	$("#changepass").submit(function(){
 		var inputs=$("#xgmm input");
@@ -160,44 +142,24 @@ $(function() {
 		}
 	});
 //	添加通报提交按钮判断
-	$("#tjtb").submit(function(){
+	/*$("#tjtb").click(function(){
 		var inputs=$("#jt input",window.parent.document);
 		var ygbh=inputs[0].value;
-		var xm=inputs[1].value;
-		var ks=inputs[2].value;
-		var fjh=inputs[3].value;
-		var tbsj=inputs[4].value;
 		var tbyy=inputs[5].value;
 		var cfje=inputs[5].value;
 		if(ygbh==""){
-			alert("员工编号不能为空！");
-			 return false;
-		}
-		if(xm==""){
-			alert("姓名不能为空！");
-			 return false;
-		}
-		if(ks==""){
-			alert("科室不能为空！");
-			 return false;
-		}
-		if(fjh==""){
-			alert("房间号不能为空！");
-			 return false;
-		}
-		if(tbsj==""){
-			alert("通报时间不能为空！");
+			alert("请输入员工编号");
 			 return false;
 		}
 		if(tbyy==""){
-			alert("通报原因不能为空！");
+			alert("请输入通报原因");
 			 return false;
 		}
 		if(cfje==""){
-			alert("处罚金额不能为空！");
+			alert("请输入处罚金额");
 			 return false;
 		}
-	});
+	});*/
 	
 
 });

@@ -72,23 +72,21 @@ public class LoginAction extends ActionSupport {
 		this.message = message;
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
-	public String execute() {
-
+	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
+	public String execute(){
+		
 		if (this.username != null && this.password != null) {
-
 			// 判断表中是否有该用户存在
-			if (service.login(username) != null && !this.username.equals("")
+			if (service.login(username.trim()) != null && !this.username.equals("")
 					&& this.username != null) {
-
+				
 				log.info(this.username + "，开始登录。时间："
 						+ new SimpleDateFormat().format(new Date()));
 
 				// 判断输入的密码是否正确
-				if (this.password.equals(service.login(username).getPassword())) {
-
+				if (this.password.equals(service.login(username.trim()).getPassword())) {
 					// 用户对象
-					User user = service.login(username);
+					User user = service.login(username.trim());
 
 					// 获取会话对象map
 					Map<String, Object> session = ServletActionContext
@@ -116,7 +114,7 @@ public class LoginAction extends ActionSupport {
 		}else{
 			
 			return "login error";
+			}
 		}
 		
 	}
-}

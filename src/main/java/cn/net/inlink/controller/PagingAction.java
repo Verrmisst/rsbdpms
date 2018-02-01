@@ -88,7 +88,7 @@ public class PagingAction {
 		this.text = text;
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
 	public String execute() {
 
 		// 分页参数：跳过几行，

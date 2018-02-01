@@ -60,7 +60,7 @@ public class PageContentAction extends ActionSupport {
 		this.pageContent = pageContent;
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
 	public String execute() {
 		// 获取到用户的sessionMap
 		Map<String, Object> session = ServletActionContext.getContext()

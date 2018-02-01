@@ -22,16 +22,25 @@
 							<th>勤务</th>
 							<th>备注</th>
 						</tr>
-						<c:forEach items="${employees}" var="e">
 							<tr>
-								<td><input type="text"  name="empcodes" value="${e.empCode}" readonly="readonly" class="xx" style="text-align: center;"/></td>
-								<td>${e.empName}</td>
-								<td class="td"><input type="text" class="xx ks" name="dept" style="text-align: center;"/>
+								<td><input type="text"  name="empcodes" value="${employee.empCode}" readonly="readonly" class="xx" style="text-align: center;"/></td>
+								<td>${employee.empName}</td>
+								<td class="td">
+								<select name="dept" >
+								<c:forEach items="${depts}" var="dept">
+								<option value="${dept.dictName}">${dept.dictName}</option>
+								</c:forEach>
+								</select>
 								</td>
-								<td><input type="text" class="xx qw" name="duty" style="text-align: center;"/></td>
-								<td>${e.content}</td>
+								<td>
+								<select name="duty">
+								<c:forEach items="${dutys}" var="duty">
+								<option value="${duty.dictName}">${duty.dictName}</option>
+								</c:forEach>
+								</select>
+								</td>
+								<td>${employee.content}</td>
 							</tr>
-						</c:forEach>
 					</table>
 					<br /> 
 					<br /> 

@@ -75,7 +75,7 @@ public class ChangePasswordAction extends ActionSupport {
 		this.information = information;
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
 	public String execute(){
 		
 		//获取SessionMap

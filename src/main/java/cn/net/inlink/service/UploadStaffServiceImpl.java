@@ -43,5 +43,23 @@ public class UploadStaffServiceImpl implements UploadStaffService {
 	public void saveDeptDuty(UploadDeptDuty deptDuty) {
 		dao.insertDeptDutyInfo(deptDuty);
 	}
-
+	
+	//查询员工是否存在
+	@Override
+	public long queryStaff(String staffCode) {
+		
+		return dao.getStaffCount(staffCode);
+	}
+	
+	//查询退宿员工是否存在
+	@Override
+	public long queryCOStaff(String staffCode) {
+		return dao.getCOStaffCount(staffCode);
+	}
+	
+	//删除退宿员工
+	@Override
+	public void deleCOStaff(String staffCode) {
+		dao.deleCOStaff(staffCode);
+	}
 }

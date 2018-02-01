@@ -14,11 +14,13 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.net.inlink.poi.UploadDeptDutyInfo;
 import cn.net.inlink.poi.UploadStaffData;
 import cn.net.inlink.service.StaffManaService;
 import cn.net.inlink.service.UploadStaffService;
+import cn.net.inlink.vo.Dictionary;
 import cn.net.inlink.vo.Employee;
 import cn.net.inlink.vo.Goods;
 import cn.net.inlink.vo.Room;
@@ -130,7 +132,8 @@ public class UploadAction extends ActionSupport {
 	public void setUploadtype(String uploadtype) {
 		this.uploadtype = uploadtype;
 	}
-
+	
+	@Transactional(rollbackFor={RuntimeException.class, Exception.class})
 	public String execute() {
 
 		// 日志记录
@@ -165,7 +168,11 @@ public class UploadAction extends ActionSupport {
 
 				// 遍历集合获取到每个参数
 				for (UploadStaff datas : staffDatas) {
-
+					
+					//判断表中是否存在该员工(并未入住)
+					if(uservice.queryStaff(datas.getEmpCode())==0){
+					
+					
 					// 判断是否为空
 					if (datas.getLivingDate().equals("")) {
 
@@ -173,15 +180,29 @@ public class UploadAction extends ActionSupport {
 								.format(new Date()));
 
 					}
-
+					
 					// 向上传记录表中插入记录
 					log.info("处理上传记录表");
-
+					
 					uservice.saveStaffInfo(datas);
-
+					
+					}else if(uservice.queryCOStaff(datas.getEmpCode())!=0){//该员工已退宿
+						
+						//删除处理
+						uservice.deleCOStaff(datas.getEmpCode());
+					
+					}else{//已存在
+						
+						log.info("编号为："+datas.getEmpCode()+"的员工已存在");
+					}
 					// 向员工表中插入记录
-
+					
+					//判断并未入住过的人员
+				if(service.queryIdByEmpCode(datas.getEmpCode())==null){
+					
 					log.info("处理员工表");
+					
+					
 
 					emp.setEmpCode(datas.getEmpCode());
 
@@ -195,7 +216,8 @@ public class UploadAction extends ActionSupport {
 					service.saveEmpGender(
 							service.queryIdByDictName(datas.getGender())
 									.getId(), datas.getEmpCode());
-
+				
+				
 					// 向房间表插入记录
 
 					log.info("处理房间表");
@@ -208,14 +230,19 @@ public class UploadAction extends ActionSupport {
 					service.editRommBuildId(
 							service.queryIdByBuildName(datas.getBuildingName())
 									.getId(), datas.getRoomCode());
-
+					//入住过的退宿员工
+				}else if(service.queryCOEmpByEmpCode(datas.getEmpCode())!=null){
+					//删除操作
+					service.deleCOEmpByCode(datas.getEmpCode());
+					
+				}
 					// 向物品表中更新数据
 
 					/* 一次更新四条，分别是床，衣柜，鞋柜，桌柜 */
 
-					log.info("处理物品表");
+					//log.info("处理物品表");
 
-					// 床
+				/*	// 床
 					service.saveGoods(service.queryIdByDictName("床").getId(),
 							datas.getBedNum(),
 							service.queryIdByRoomCode(datas.getRoomCode())
@@ -246,7 +273,7 @@ public class UploadAction extends ActionSupport {
 									.getId(),
 							service.queryIdByEmpCode(datas.getEmpCode())
 									.getId());
-
+*/
 				}
 				this.text = "上传成功！";
 
@@ -262,6 +289,7 @@ public class UploadAction extends ActionSupport {
 				//向部门和职务信息表中插入数据
 				for (UploadDeptDuty uploadDeptDuty : deptDuty) {
 					
+					log.info("部门和职务信息表中插入数据");
 					this.uservice.saveDeptDuty(uploadDeptDuty);
 				
 					//获取职务和部门在字典表中的id
@@ -271,9 +299,13 @@ public class UploadAction extends ActionSupport {
 					//获取员工编号
 					String empCode = uploadDeptDuty.getEmpCode();
 					
+					log.info("员工编号："+empCode);
+					
+					log.info("更新员工表");
 					//更新员工表
 					this.service.editEmpDutyDept(deptId, dutyId, empCode);
 					
+					log.info("入住人员信息表");
 					//更新入住人员信息表
 					this.uservice.editDutyDept();
 					
@@ -287,6 +319,8 @@ public class UploadAction extends ActionSupport {
 		} catch (Exception e) {
 
 			this.text = "上传失败请重新上传！";
+			
+			
 			
 			log.error(e.toString());
 			
