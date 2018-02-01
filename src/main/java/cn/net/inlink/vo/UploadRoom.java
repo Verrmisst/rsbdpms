@@ -21,7 +21,9 @@ public class UploadRoom {
 
 	// 实住人数
 	private Integer occupy;
-
+	
+	private String surplus;
+	
 	// 分类
 	private String classify;
 
@@ -104,6 +106,15 @@ public class UploadRoom {
 
 	public void setContent3(String content3) {
 		this.content3 = content3;
+	}
+	
+	
+	public String getSurplus() {
+		return surplus;
+	}
+
+	public void setSurplus(String surplus) {
+		this.surplus = surplus;
 	}
 
 	@Override

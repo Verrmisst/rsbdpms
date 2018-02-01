@@ -31,6 +31,7 @@
 						<th>房间号</th>
 						<th>房间人数</th>
 						<th>实际人数</th>
+						<th>剩余空床号</th>
 						<th>分类</th>
 						<th>备注1</th>
 						<th>备注2</th>
@@ -45,6 +46,7 @@
 								style="text-align: center;" name="size" readonly="readonly"/>
 							</td>
 							<td>${room.occupy}</td>
+							<td>${surplusGoods}</td>
 							<td><input type="text" class="xx"
 								placeholder="${room.classify}" style="text-align: center;"
 								name="classify" />
@@ -67,7 +69,6 @@
 						</tr>
 					</form>
 				</table>
-				<span style="font-size: 15px;">该房间剩余床位号码为：${surplusGoods}</span>
 			</div>
 		</div>
 	</div>

@@ -99,6 +99,7 @@ public class RoomGoods {
 	public void setRoom(UploadRoom room) {
 		this.room = room;
 	}
+	
 
 	@Override
 	public String toString() {

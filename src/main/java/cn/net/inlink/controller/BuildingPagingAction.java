@@ -1,5 +1,6 @@
 package cn.net.inlink.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.net.inlink.service.DormManaService;
 import cn.net.inlink.service.StaffManaService;
+import cn.net.inlink.vo.RoomGoods;
 import cn.net.inlink.vo.UploadRoom;
 
 /**
@@ -34,7 +36,9 @@ public class BuildingPagingAction {
 
 	// 宿舍信息集合
 	private List<UploadRoom> rooms;
-
+	
+	private List<StringBuilder> surpluses;
+	
 	// 页码，初始化为0
 	private int pageNum = 0;
 
@@ -100,9 +104,21 @@ public class BuildingPagingAction {
 		this.pageCount = pageCount;
 	}
 	
+	public List<StringBuilder> getSurpluses() {
+		return surpluses;
+	}
+
+	public void setSurpluses(List<StringBuilder> surpluses) {
+		this.surpluses = surpluses;
+	}
+
 	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
 	public String execute() {
-
+		
+		
+		
+		 List<RoomGoods> rm = new ArrayList<RoomGoods>();
+		
 		// 获取宿舍楼名
 		String buildName = null;
 
@@ -112,7 +128,6 @@ public class BuildingPagingAction {
 			buildName = new String("静雅苑");
 		}
 		
-		
 		// 分页参数：跳过几行，
 		/*
 		 * offest的值和页码相关，每页记录数*页码
@@ -120,7 +135,7 @@ public class BuildingPagingAction {
 		int offest;
 
 		// 分页参数：取几行，初始化为10
-		int limit = 10;
+		int limit = 6;
 
 		offest = limit * this.pageNum;
 
@@ -133,8 +148,30 @@ public class BuildingPagingAction {
 		this.pageCount = (this.recordCount + limit - 1) / limit;
 
 		RowBounds rb = new RowBounds(offest, limit);
-
+		
 		this.rooms = dormService.queryRooms(buildName, rb);
+		
+		for (UploadRoom ur : rooms) {
+			
+			//System.out.println(ur.getBuildName()+" "+ur.getRoomCode());
+		
+			rm = dormService.querySurplusGoods(ur.getBuildName(), ur.getRoomCode());
+			
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < rm.size(); i++) {
+				
+				if(i==rm.size()-1){
+					
+					sb.append(rm.get(i).getBedNum());
+					
+				}else{
+				sb.append(rm.get(i).getBedNum()+", ");
+				}
+			}
+			ur.setSurplus(sb.toString());
+			//System.out.println(sb.toString());
+		}
+		
 		
 		if (this.recordCount == 0) {
 
