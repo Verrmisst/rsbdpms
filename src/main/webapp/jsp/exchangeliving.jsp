@@ -72,7 +72,7 @@
 					</div>
 					<div>
 						<span>鞋柜号：</span> <input type="text"
-							placeholder="${staff.shopboxNum}" name="shopboxNum">
+							 name="shopboxNum" value="${staff.shopboxNum}">
 					</div>
 					<div>
 						<span>调宿时间：</span> <input size="16" type="text" name="livingDate"

@@ -22,6 +22,7 @@ public interface DormManaDao {
 	//查询所有入住人员信息
 	public List<UploadStaff> getAllEmps(RowBounds rb);
 	
+	
 	//查询总记录数
 	@Select("select count(*) from ssh_staffinfo where staff_fldflag = 0")
 	public long getCounts();

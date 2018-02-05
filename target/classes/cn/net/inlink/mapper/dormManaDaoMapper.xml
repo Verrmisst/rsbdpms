@@ -75,6 +75,7 @@
 		by
 		s1.staff_fldbuild,s1.staff_fldroomcode
 	</select>
+	
 
 	<select id="getStaffByCode" resultMap="staffResultMap">
 		SELECT
@@ -131,7 +132,7 @@
 		s3 ON s1.staff_fldduty = s3.dict_fldid
 		WHERE s1.staff_fldflag = 1 order
 		by
-		s1.staff_fldbuild,s1.staff_fldroomcode
+		s1.staff_fldexchangedate
 	</select>
 
 	<select id="getAllCheckoutsNoPaging" resultMap="staffResultMap">

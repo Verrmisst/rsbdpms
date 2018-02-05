@@ -197,6 +197,7 @@
 			<result name="errorInfo">/WEB-INF/jsp/error.jsp</result>
 		</action>
 		
+		<!-- 退宿人员下载 -->
 		<action name="download" class="cn.net.inlink.controller.DownloadAction">
             <result name="download" type="stream">
                  <!-- 下载文件类型定义 -->
@@ -210,6 +211,7 @@
             </result>
         </action>
 		
+		<!-- 入住人员下载 -->
 		<action name="downloadall" class="cn.net.inlink.controller.DownloadAllStaffsAction">
             <result name="download" type="stream">
                  <!-- 下载文件类型定义 -->
@@ -218,6 +220,48 @@
                  <param name="inputName">inputStream</param>　　　　　　　　　　　　　　　　　　
                  <!-- 下载文件处理方式 --> 　　　　　　　　　　　　　　　　
                  <param name="contentDisposition">attachment;fileName="allstaffs.xls"</param>
+                 <!-- 下载文件的缓冲大小 -->
+                 <param name="bufferSize">1024000</param>
+            </result>
+        </action>
+        
+        <!-- 借用信息下载 -->
+        <action name="downloadborrow" class="cn.net.inlink.controller.DownloadBorrowAction">
+            <result name="downloadborrow" type="stream">
+                 <!-- 下载文件类型定义 -->
+                 <param name="contentType">application/octet-stream </param>
+                 <!-- 下载文件输出流定义 -->
+                 <param name="inputName">inputStream</param>　　　　　　　　　　　　　　　　　　
+                 <!-- 下载文件处理方式 --> 　　　　　　　　　　　　　　　　
+                 <param name="contentDisposition">attachment;fileName="staffborrow.xls"</param>
+                 <!-- 下载文件的缓冲大小 -->
+                 <param name="bufferSize">1024000</param>
+            </result>
+        </action>
+        
+        <!-- 通报信息下载 -->
+        <action name="downloadnotifice" class="cn.net.inlink.controller.DownloadNotificeAction">
+            <result name="downloadnotifice" type="stream">
+                 <!-- 下载文件类型定义 -->
+                 <param name="contentType">application/octet-stream </param>
+                 <!-- 下载文件输出流定义 -->
+                 <param name="inputName">inputStream</param>　　　　　　　　　　　　　　　　　　
+                 <!-- 下载文件处理方式 --> 　　　　　　　　　　　　　　　　
+                 <param name="contentDisposition">attachment;fileName="staffnotifice.xls"</param>
+                 <!-- 下载文件的缓冲大小 -->
+                 <param name="bufferSize">1024000</param>
+            </result>
+        </action>
+        
+           <!-- 宿舍配置信息下载 -->
+        <action name="downloadroomsetting" class="cn.net.inlink.controller.DownloadRoomSettingAction">
+            <result name="downloadroomsetting" type="stream">
+                 <!-- 下载文件类型定义 -->
+                 <param name="contentType">application/octet-stream </param>
+                 <!-- 下载文件输出流定义 -->
+                 <param name="inputName">inputStream</param>　　　　　　　　　　　　　　　　　　
+                 <!-- 下载文件处理方式 --> 　　　　　　　　　　　　　　　　
+                 <param name="contentDisposition">attachment;fileName="roomsetting.xls"</param>
                  <!-- 下载文件的缓冲大小 -->
                  <param name="bufferSize">1024000</param>
             </result>
@@ -231,7 +275,7 @@
 		
 		<!-- 员工退宿 -->
 		<action name="checkout" class="cn.net.inlink.controller.StaffCheckOutAction">
-			<result name="checkout success" type="redirectAction">showblurstaff</result>
+			<result name="checkout success" type="redirectAction">showorigindorm</result>
 			<result name="checkout error">/WEB-INF/jsp/error.jsp</result>
 			<!-- <result name="checkout success" type="json"></result>
 			<result name="checkout error" type="json"></result> -->
@@ -240,7 +284,7 @@
 		<!-- 员工调宿 -->
 		<action name="staffexchange" class="cn.net.inlink.controller.ExchangeDormAction">
 			<result name="exchange error" >/WEB-INF/jsp/error.jsp</result>
-			<result name="exchange success" type="redirectAction">showpagingdorm</result>
+			<result name="exchange success" type="redirectAction">showorigindorm</result>
 		</action>
 		
 		<!-- 显示调宿页面 -->

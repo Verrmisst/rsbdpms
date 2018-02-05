@@ -324,10 +324,13 @@ public class SingleTypeinOldAction {
 				return "insert error";
 
 			}
-
+			
+			System.out.println(dept.toString());
+			System.out.println(duty.toString());
+			
 			// 更新科室和职务
-			Integer deptId = service.queryIdByDictName(dept).getId();
-			Integer dutyId = service.queryIdByDictName(duty).getId();
+			Integer deptId = service.queryIdByDictName(dept.equals("")?"无科室":dept).getId();
+			Integer dutyId = service.queryIdByDictName(duty.equals("")?"无勤务":duty).getId();
 
 			service.editEmpDutyDept(deptId, dutyId, empCode);
 
@@ -392,7 +395,7 @@ public class SingleTypeinOldAction {
 			staff.setDeskNum(deskNum == null ? "" : deskNum);
 			staff.setShopboxNum(shoeboxNum == null ? "" : shoeboxNum);
 			staff.setContent(mattressNum == 0 ? "床垫已领" : "床垫未领取");
-			staff.setLivingDate(livingDate == null ? new SimpleDateFormat(
+			staff.setLivingDate(livingDate.equals("") ? new SimpleDateFormat(
 					"yyyy/MM/dd").format(new Date()) : livingDate);
 			uploadService.saveStaffInfo(staff);
 

@@ -6,7 +6,7 @@ $(document).ready(function(){
 	var btn=$("#div button");
 	for(var i=0;i<btn.length;i++){
 		btn[i].onclick=function(){
-			var f=this.parentNode.parentNode;
+			/*var f=this.parentNode.parentNode;
 			var inputs=f.getElementsByTagName("input");
 			if(inputs[0].value==""){
 				alert("请输入房间人数");
@@ -16,7 +16,7 @@ $(document).ready(function(){
 				alert("请输入分类");
 				return false;
 			}
-			
+			*/
 			alert("修改成功！");
 		}
 	}

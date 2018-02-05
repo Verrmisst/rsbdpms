@@ -46,14 +46,14 @@
 									style="text-align: center;" name="size" readonly="readonly"/></td>
 								<td>${r.occupy}</td>
 								<td>${r.surplus}</td>
-								<td><input type="text" class="xx" placeholder="${r.classify}"
+								<td><input type="text" class="xx" value="${r.classify}"
 									style="text-align: center;" name="classify"/></td>
-								<td><input type="text" class="xx" placeholder="${r.content1}"
+								<td><input type="text" class="xx" value="${r.content1}"
 									style="text-align: center;" name="content1"/></td>
-								<td><input type="text" class="xx" placeholder="${r.content2}"
+								<td><input type="text" class="xx" value="${r.content2}"
 									style="text-align: center;" name="content2"/>
 								</td>
-								<td><input type="text" class="xx" placeholder="${r.content3}"
+								<td><input type="text" class="xx" value="${r.content3}"
 									style="text-align: center;" name="content3"/>
 									<input type="hidden" name="buildId" value="1"/>
 									<input type="hidden" name="roomCode" value="${r.roomCode}"/>
@@ -64,6 +64,7 @@
 						</form>
 					</c:forEach>
 				</table>
+				<a href="downloadroomsetting">导出宿舍配置信息</a>
 				<br /> <br />
 				<center>
 					<c:if test="${recordCount>10}">

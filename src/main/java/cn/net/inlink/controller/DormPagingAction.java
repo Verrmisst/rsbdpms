@@ -178,21 +178,21 @@ public class DormPagingAction {
 			return "show error";
 		}
 
-		/*// 获取文件输入流
+		// 获取文件输入流
 		InputStream fis = QueryCheckOutAction.class.getClassLoader()
 				.getResourceAsStream("cn/net/inlink/excel/allstaffs.xls");
 
 		// 获取上下文对象
 		ServletContext context = ServletActionContext.getServletContext();
-
-		List<RoomGoods> goods_staffs = blurService.queryAllStaffs();
+		
+		List<UploadStaff> goods_staffs = service.queryAllStaffs(new RowBounds());
 		
 		// 生成excel文件
 		try {
 			DownloadAllStaffs.exportAllStaffInfo(fis, goods_staffs, context);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 		return "show dorm";
 	}
 }

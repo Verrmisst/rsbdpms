@@ -34,6 +34,7 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<a href="downloadborrow" >导出借用信息</a>
 	<br/>
 	<center>
 		<c:if test="${recordCountg>5}">

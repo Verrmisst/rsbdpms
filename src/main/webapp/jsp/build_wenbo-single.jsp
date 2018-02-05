@@ -45,14 +45,14 @@
 									style="text-align: center;" name="size" readonly="readonly"/></td>
 								<td>${room.occupy}</td>
 								<td>${surplusGoods}</td>
-								<td><input type="text" class="xx" placeholder="${room.classify}"
+								<td><input type="text" class="xx" value="${room.classify}"
 									style="text-align: center;" name="classify"/></td>
-								<td><input type="text" class="xx" placeholder="${room.content1}"
+								<td><input type="text" class="xx" value="${room.content1}"
 									style="text-align: center;" name="content1"/></td>
-								<td><input type="text" class="xx" placeholder="${room.content2}"
+								<td><input type="text" class="xx" value="${room.content2}"
 									style="text-align: center;" name="content2"/>
 								</td>
-								<td><input type="text" class="xx" placeholder="${room.content3}"
+								<td><input type="text" class="xx" value="${room.content3}"
 									style="text-align: center;" name="content3"/>
 									<input type="hidden" name="buildId" value="1"/>
 									<input type="hidden" name="roomCode" value="${room.roomCode}"/>

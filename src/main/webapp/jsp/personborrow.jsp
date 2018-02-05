@@ -51,7 +51,7 @@
 			type="hidden" id="gbhidpc" value="${pageCountg}" />
 		<div class="bottom">
 			<div id="nogb" style="position: absolute;left: 0;right: 0;top: 50px;bottom: 0;margin: auto;width: 1005px;height: ;"></div>
-			<div style="position: absolute;left: 0;right: 0;top: 70px;bottom: 0;margin: auto;width: 1000px;height: 35px;">
+			<div style="position: absolute;left: 0;right: 0;top: 90px;bottom: 0;margin: auto;width: 1000px;height: 35px;">
 				<hr />
 			</div>
 			<div id="gb" style="position: absolute;left: 0;right: 0;top: 100px;bottom: 0;margin: auto;width: 1005px;height: 35px;"></div>

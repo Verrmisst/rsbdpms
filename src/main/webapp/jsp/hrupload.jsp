@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="css/single.css" />
 <script type="text/javascript" src="js/jquery-1.8.2.js"></script>
 <script type="text/javascript" src="js/excel.js"></script>
+
 <title>Excel导入</title>
 </head>
 <body>
@@ -41,7 +42,7 @@
 							<td>必填</td>
 						</tr>
 					</table>
-					<span style="font-size: 20px;color: red;">备注：上传前请检查各字段是否符合要求，检查excel文件文件中是否有空行。</span>
+					<span style="font-size: 20px;color: red;">备注：上传前请检查各字段是否符合要求，检查excel文件文件中是否有空行，检查excel是否为excel2003文件。</span>
 				</div>
 
 				<div class="btn" style="bottom: 10px">

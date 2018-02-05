@@ -102,6 +102,8 @@ public class AddBorrowRecordAction {
 	@Transactional(rollbackFor={RuntimeException.class, Exception.class})
 	public String execute(){
 		
+		
+		
 		//判断该员工是否存在，不存在返回至错误页面
 		if(dormService.queryStaffByCode(staffCode.trim())==null){
 			
@@ -119,7 +121,7 @@ public class AddBorrowRecordAction {
 		
 		borrow.setStaff(staff);
 		borrow.setObjectName(objectName.trim());
-		borrow.setBeginDate(this.beginDate==null?new SimpleDateFormat("yyyy/MM/dd").format(new Date()):beginDate);
+		borrow.setBeginDate(this.beginDate.equals("")?new SimpleDateFormat("yyyy/MM/dd").format(new Date()):beginDate);
 		borrow.setEndDate("");
 		borrow.setContent("未归还");
 		borrow.setFlag(0);

@@ -33,6 +33,7 @@
 							</tr>
 							</c:forEach>
 						</table>
+						<a href="downloadnotifice">导出通报信息</a>
 						<br /> <br />
 				<center>
 					<c:if test="${recordCount>15}">

@@ -141,10 +141,13 @@
 				<input type="hidden" value="${pageNum}" id="pagenum" /> <input
 					type="hidden" value="${pageCount}" id="pagecount" /> 
 			</form>
+			
 		</div>
-
+			
 		<div class="bottom" id="bottom">
-			<div class="inp" id="inp"></div>
+			<div class="inp" id="inp">
+			</div>
+			
 		</div>
 	</div>
 </body>

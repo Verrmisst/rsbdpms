@@ -7,14 +7,13 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 import cn.net.inlink.utils.StaffValueUtil;
-import cn.net.inlink.vo.RoomGoods;
+import cn.net.inlink.vo.UploadStaff;
 
 /**
  * 生成用于下载的excel文件
@@ -26,7 +25,7 @@ import cn.net.inlink.vo.RoomGoods;
 public class DownloadAllStaffs {
 
 	public static void exportAllStaffInfo(InputStream input,
-			List<RoomGoods> staffs, ServletContext context) {
+			List<UploadStaff> staffs, ServletContext context) {
 
 		// 获取项目webroot路径
 		String path = context.getRealPath("/");
@@ -42,92 +41,57 @@ public class DownloadAllStaffs {
 
 			// 获取第一张sheet
 			HSSFSheet sheet = workbook.getSheetAt(0);
-			
+
 			// 获取第一张sheet表头
 			HSSFRow row = sheet.getRow(0);
 			
+			
 			// 写入数据
-			for (int i = 0; i < staffs.size(); i++) {
-				
+			for (int index = 0; index < staffs.size(); index++) {
+
 				// 从第二行开始写
-				row = sheet.getRow(1+i);
+				 row = sheet.getRow(1+index);
 				
-				//System.out.println(sheet);
-				
-				//System.out.println(row);
-				
-				/*// 房间号
-				row.createCell(0).setCellValue(
-						StaffValueUtil.getStringValue(staffs.get(i)
-								.getBuildName())
-								+ " "
-								+ StaffValueUtil.getStringValue(staffs.get(i)
-										.getRoomCode()));
-				// 床号
-				row.createCell(1).setCellValue(
-						StaffValueUtil
-								.getStringValue(staffs.get(i).getBedNum()));
 				// 员工编号
-				row.createCell(2).setCellValue(
-						StaffValueUtil.getStringValue(StaffValueUtil.getStaff(
-								staffs.get(i).getStaff()).getEmpCode()));
+				
+				row.getCell(0).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getEmpCode()));
+				
 				// 姓名
-				row.createCell(3).setCellValue(
-						StaffValueUtil.getStringValue(StaffValueUtil.getStaff(
-								staffs.get(i).getStaff()).getEmpName()));
+				row.getCell(1).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getEmpName()));
+
+				// 性别
+				row.getCell(2).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getGender()));
+				
 				// 科室
-				row.createCell(4).setCellValue(
-						StaffValueUtil.getStringValue(StaffValueUtil.getObject(
-								StaffValueUtil.getStaff(
-										staffs.get(i).getStaff()).getDept())
-								.getDictName()));
+				row.getCell(3).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getDept().getDictName()));
+				
 				// 勤务
-				row.createCell(5).setCellValue(
-						StaffValueUtil.getStringValue(StaffValueUtil.getObject(
-								StaffValueUtil.getStaff(
-										staffs.get(i).getStaff()).getDuty())
-								.getDictName()));
-				// 入住日期
-				row.createCell(6).setCellValue(
-						StaffValueUtil.getStringValue(StaffValueUtil.getStaff(
-								staffs.get(i).getStaff()).getLivingDate()));
+				row.getCell(4).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getDuty().getDictName()));
+				
+				// 宿舍楼
+				row.getCell(5).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getBuildingName()));
+				
+				// 房间号
+				row.getCell(6).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getRoomCode()));
+				
+				// 床号
+				row.getCell(7).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getBedNum()));
+				
 				// 衣柜号
-				row.createCell(7).setCellValue(
-						StaffValueUtil.getStringValue(staffs.get(i)
-								.getWardrobeNum()));
+				row.getCell(8).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getWardrobeNum()));
+				
 				// 桌柜号
-				row.createCell(8).setCellValue(
-						StaffValueUtil.getStringValue(staffs.get(i)
-								.getDeskNum()));
+				row.getCell(9).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getDeskNum()));
+
 				// 鞋柜号
-				row.createCell(9).setCellValue(
-						StaffValueUtil.getStringValue(StaffValueUtil.getStaff(
-								staffs.get(i).getStaff()).getShopboxNum()));
-				// 房间人数
-				row.createCell(10).setCellValue(
-						StaffValueUtil.getIntegerValue(StaffValueUtil.getRoom(
-								staffs.get(i).getRoom()).getSize()));
-				// 实际人数
-				row.createCell(11).setCellValue(
-						StaffValueUtil.getIntegerValue(StaffValueUtil.getRoom(
-								staffs.get(i).getRoom()).getOccupy()));
-				// 分类
-				row.createCell(12).setCellValue(
-						StaffValueUtil.getStringValue(StaffValueUtil.getRoom(
-								staffs.get(i).getRoom()).getClassify()));
-				// 备注1
-				row.createCell(13).setCellValue(
-						StaffValueUtil.getStringValue(StaffValueUtil.getRoom(
-								staffs.get(i).getRoom()).getContent1()));
-				// 备注2
-				row.createCell(14).setCellValue(
-						StaffValueUtil.getStringValue(StaffValueUtil.getRoom(
-								staffs.get(i).getRoom()).getContent2()));
-				// 备注3
-				row.createCell(15).setCellValue(
-						StaffValueUtil.getStringValue(StaffValueUtil.getRoom(
-								staffs.get(i).getRoom()).getContent3()));
-*/
+				row.getCell(10).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getShopboxNum()));
+
+				// 入住时间
+				row.getCell(11).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getLivingDate()));
+
+				// 调宿时间
+				row.getCell(12).setCellValue(StaffValueUtil.getStringValue(staffs.get(index).getExchangeDate()));
+
 			}
 
 			workbook.setSheetName(0, "入住人员信息");

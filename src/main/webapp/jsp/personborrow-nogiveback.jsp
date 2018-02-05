@@ -13,7 +13,7 @@
 
 			var endDate = $("#returndate").val();
 
-			$.get("objectreturn", {
+			$.post("objectreturn", {
 				borrowId : borrowId,
 				endDate : endDate
 			},

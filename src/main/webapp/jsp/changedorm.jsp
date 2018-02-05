@@ -62,6 +62,7 @@ $("#checkout").click(function() {
 						</tr>
 					</c:forEach>
 				</table>
+				<a href="downloadall" >导出入住人员信息</a>
 				<br /> <br /> <input type="hidden" id="pgNum" value="${pageNum}" />
 				<input type="hidden" id="pgCount" value="${pageCount}" />
 				<center>

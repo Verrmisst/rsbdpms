@@ -14,6 +14,30 @@
 <script type="text/javascript" src="js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/ddlr.js"></script>
+<script type="text/javascript">
+$(function(){
+
+	$("#typein").submit(function(){
+		
+		var empcode = $("#empcode").val();
+		var empname = $("#empname").val();
+
+		if (empcode == "") {
+
+			alert("请输入员工编号");
+			return false;
+
+		}
+		if (empname == "") {
+
+			alert("请输入员工姓名");
+			return false;
+		}
+		alert("提交成功！");
+	});
+});
+
+</script>
 
 <title>单独录入</title>
 </head>
@@ -49,7 +73,7 @@
 							name="roomCode" id="room">
 					</div>
 					<div>
-						<span>员工编号：</span> <input type="text" name="empCode">
+						<span>员工编号：</span> <input type="text" name="empCode" id="empcode">
 					</div>
 					<div>
 						<span>员工性别：</span> <select name="empGender">
@@ -59,7 +83,7 @@
 					</div>
 					<div>
 						<span>姓名：</span> <input
-							type="text" name="empName">
+							type="text" name="empName" id="empname">
 					</div>
 					<div>
 						<span>入住日期：</span>  

@@ -17,6 +17,7 @@ import cn.net.inlink.exceptions.UploadException;
 import cn.net.inlink.poi.DownloadCheckout;
 import cn.net.inlink.service.BlurSearchService;
 import cn.net.inlink.service.DormManaService;
+import cn.net.inlink.service.StaffBorrowService;
 import cn.net.inlink.service.StaffManaService;
 import cn.net.inlink.service.StaffNotificationService;
 import cn.net.inlink.service.UploadStaffService;
@@ -229,6 +230,8 @@ public class LocalTest {
 		
 		BlurSearchService bservice = (BlurSearchService) ioc.getBean("blurSearchService");
 		
+		StaffBorrowService boservice = (StaffBorrowService) ioc.getBean("staffBorrowService");
+		
 		/*StaffNotification notification = new StaffNotification();
 		notification.setNotificeMoney("100");
 		notification.setNotificeReason("test");
@@ -435,16 +438,6 @@ public class LocalTest {
 			System.out.println(us.toString());
 		}*/
 		
-		UploadStaff staff = new UploadStaff();
-		
-		staff.setBeginDate("2017/02/01");
-		staff.setEndDate("2017/09/30");
-		
-		List<UploadStaff> staffs = bservice.queryByBlur(staff, new RowBounds(0, 5));
-		
-		
-		for (UploadStaff us : staffs) {
-			System.out.println(us.toString());
-		}
+	
 	}
 }

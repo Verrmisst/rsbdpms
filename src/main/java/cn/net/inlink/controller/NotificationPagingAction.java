@@ -1,13 +1,19 @@
 package cn.net.inlink.controller;
 
+import java.io.InputStream;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.apache.ibatis.session.RowBounds;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.net.inlink.poi.DownloadBorrow;
+import cn.net.inlink.poi.DownloadNotifice;
 import cn.net.inlink.service.StaffBorrowService;
 import cn.net.inlink.service.StaffNotificationService;
 import cn.net.inlink.vo.StaffBorrow;
@@ -36,11 +42,10 @@ public class NotificationPagingAction {
 	// 总页数
 	private String pageCount;
 
-	
 	// 信息存储
 	private String text;
-	
-	//记录集
+
+	// 记录集
 	private List<StaffNotification> notifices;
 
 	public StaffNotificationService getService() {
@@ -82,8 +87,7 @@ public class NotificationPagingAction {
 	public void setText(String text) {
 		this.text = text;
 	}
-	
-	
+
 	public List<StaffNotification> getNotifices() {
 		return notifices;
 	}
@@ -115,7 +119,7 @@ public class NotificationPagingAction {
 		RowBounds rb = new RowBounds(offest, limit);
 
 		this.notifices = service.queryAllNotifications(rb);
-		
+
 		// 判断是否有记录
 		if (this.recordCount == 0) {
 
@@ -124,8 +128,24 @@ public class NotificationPagingAction {
 			return "show error";
 		}
 
+		// 获取文件输入流
+		InputStream fis = QueryCheckOutAction.class.getClassLoader()
+				.getResourceAsStream("cn/net/inlink/excel/staffnotifice.xls");
+
+		// 获取上下文对象
+		ServletContext context = ServletActionContext.getServletContext();
+
+		List<StaffNotification> notifices = service
+				.queryAllNotifications(new RowBounds());
+
+		// 生成excel文件
+		try {
+			DownloadNotifice.exportStaffNotificeInfo(fis, notifices, context);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return "show success";
 	}
-
 
 }

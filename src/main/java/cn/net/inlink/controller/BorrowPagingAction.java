@@ -1,15 +1,23 @@
 package cn.net.inlink.controller;
 
+import java.io.InputStream;
+import java.security.acl.Owner;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.apache.ibatis.session.RowBounds;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.net.inlink.poi.DownloadAllStaffs;
+import cn.net.inlink.poi.DownloadBorrow;
 import cn.net.inlink.service.StaffBorrowService;
 import cn.net.inlink.vo.StaffBorrow;
+import cn.net.inlink.vo.UploadStaff;
 
 /**
  * 显示借用总信息的控制器 包含已归还和未归还的信息
@@ -51,9 +59,8 @@ public class BorrowPagingAction {
 
 	// 信息存储
 	private String text;
-	
+
 	private String text2;
-	
 
 	public StaffBorrowService getService() {
 		return service;
@@ -110,8 +117,7 @@ public class BorrowPagingAction {
 	public void setText(String text) {
 		this.text = text;
 	}
-	
-	
+
 	public String getPageNumg() {
 		return pageNumg;
 	}
@@ -135,7 +141,7 @@ public class BorrowPagingAction {
 	public void setPageCountg(String pageCountg) {
 		this.pageCountg = pageCountg;
 	}
-	
+
 	public String getText2() {
 		return text2;
 	}
@@ -147,6 +153,7 @@ public class BorrowPagingAction {
 	// 未归还
 	@Transactional(rollbackFor = { RuntimeException.class, Exception.class })
 	public String noGiveBack() {
+
 		// 分页参数：跳过几行，
 		/*
 		 * offest的值和页码相关，每页记录数*页码
@@ -177,6 +184,26 @@ public class BorrowPagingAction {
 			return "show error";
 		}
 
+		// 获取文件输入流
+		InputStream fis = QueryCheckOutAction.class.getClassLoader()
+				.getResourceAsStream("cn/net/inlink/excel/staffborrow.xls");
+
+		// 获取上下文对象
+		ServletContext context = ServletActionContext.getServletContext();
+
+		List<StaffBorrow> objectGiveBack = service
+				.queryStaffGiveBackBorrows(new RowBounds());
+		List<StaffBorrow> objectNoGiveBack = service
+				.queryStaffNoGiveBackBorrows(new RowBounds());
+
+		// 生成excel文件
+		try {
+			DownloadBorrow.exportStaffBorrowInfo(fis, objectGiveBack,
+					objectNoGiveBack, context);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return "show success";
 	}
 
@@ -198,9 +225,10 @@ public class BorrowPagingAction {
 		// recordCount:总记录数
 
 		this.recordCountg = service.queryGiveBackCount();
-		
-		this.pageCountg = String.valueOf((this.recordCountg + limit - 1) / limit);
-		
+
+		this.pageCountg = String.valueOf((this.recordCountg + limit - 1)
+				/ limit);
+
 		RowBounds rb = new RowBounds(offest, limit);
 
 		this.giveBacks = service.queryStaffGiveBackBorrows(rb);
@@ -211,6 +239,26 @@ public class BorrowPagingAction {
 			this.text2 = "暂无归还信息";
 
 			return "show error";
+		}
+
+		// 获取文件输入流
+		InputStream fis = QueryCheckOutAction.class.getClassLoader()
+				.getResourceAsStream("cn/net/inlink/excel/staffborrow.xls");
+
+		// 获取上下文对象
+		ServletContext context = ServletActionContext.getServletContext();
+
+		List<StaffBorrow> objectGiveBack = service
+				.queryStaffGiveBackBorrows(new RowBounds());
+		List<StaffBorrow> objectNoGiveBack = service
+				.queryStaffNoGiveBackBorrows(new RowBounds());
+
+		// 生成excel文件
+		try {
+			DownloadBorrow.exportStaffBorrowInfo(fis, objectGiveBack,
+					objectNoGiveBack, context);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return "show success";

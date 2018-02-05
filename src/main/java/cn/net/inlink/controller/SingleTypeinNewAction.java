@@ -156,7 +156,7 @@ public class SingleTypeinNewAction {
 
 	public void setLivingDate(String livingDate) {
 
-		if (livingDate == null) {// 不填默认系统时间
+		if (livingDate.equals("")) {// 不填默认系统时间
 			this.livingDate = new SimpleDateFormat("yyyy/MM/dd")
 					.format(new Date());
 		}
@@ -364,7 +364,7 @@ public class SingleTypeinNewAction {
 			staff.setDeskNum(deskNum == null ? "" : deskNum);
 			staff.setShopboxNum(shoeboxNum == null ? "" : shoeboxNum);
 			staff.setContent(mattressNum == 0 ? "床垫已领" : "床垫未领取");
-			staff.setLivingDate(livingDate == null ? new SimpleDateFormat(
+			staff.setLivingDate(livingDate.equals("")  ? new SimpleDateFormat(
 					"yyyy/MM/dd").format(new Date()) : livingDate);
 			uploadService.saveStaffInfo(staff);
 

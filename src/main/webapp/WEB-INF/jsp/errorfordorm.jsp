@@ -49,28 +49,23 @@ body {
 <div class="single">
 	<div class="top">
 			<h3 style="font-size: 20px;">宿舍调配</h3>
-			<form class="ssk" id="ssk" action="showblurstaff" method="post">
-				<input type="text" placeholder="请输入员工编号" name="staffCode"
-					id="staffcode" /> <input type="text" placeholder="请输入姓名"
-					name="staffName" id="staffname" /> <input type="text"
-					placeholder="请输入房间号" name="roomCode" id="roomcode" /> <select
-					name="buildName" id="buildname">
-					<option value="">==请选择宿舍楼==</option>
-					<option value="闻博轩">闻博轩</option>
-					<option value="静雅苑">静雅苑</option>
-				</select> <select name="department" id="dept">
-					<option value="">==请选择科室==</option>
-					<c:forEach items="${depts}" var="dept">
-						<option>${dept.dictName}</option>
-					</c:forEach>
-				</select> <select name="duty" id="duty">
-					<option value="">====请选择勤务====</option>
-					<c:forEach items="${dutys}" var="duty">
-						<option>${duty.dictName}</option>
-					</c:forEach>
-				</select> <br /> <font size="2.5px">入住时间段：</font> <input type="text"
+			<form class="ssk" id="ssk" action="showblurstaff" method="post"> 
+				<font size="2.5px">员工编号：</font>
+				<input type="text" placeholder="" name="staffCode"
+					id="staffcode" style="height:20px"/> 
+					&nbsp;&nbsp;
+					<font size="2.5px">员工姓名：</font>
+					<input type="text" placeholder=""
+					name="staffName" id="staffname" style="height:20px"/> 
+					&nbsp;&nbsp;
+					<font size="2.5px">房间号：</font>
+					<input type="text"
+					placeholder="" name="roomCode" id="roomcode" style="height:20px"/> 
+					<br /> 
+				<font size="2.5px">入住时间段：</font> <input type="text"
 					style="height:20px;" name="beginDate" size="16" id="datetimeBegin"
 					class="form_datetime" />
+				
 				<script type="text/javascript">
 					$("#datetimeBegin").datetimepicker({
 						format : 'yyyy/mm/dd',
@@ -88,6 +83,7 @@ body {
 				</script>
 				~ <input type="text" name="endDate" style="height:20px;" size="16"
 					id="datetimeEnd" class="form_datetime" />
+					
 				<script type="text/javascript">
 					$("#datetimeEnd").datetimepicker({
 						format : 'yyyy/mm/dd',
@@ -103,6 +99,24 @@ body {
 										$("#datetimeStart".val()));
 							});
 				</script>
+					
+					<br/>
+					<select
+					name="buildName" id="buildname">
+					<option value="">==请选择宿舍楼==</option>
+					<option value="闻博轩">闻博轩</option>
+					<option value="静雅苑">静雅苑</option>
+				</select> <select name="department" id="dept">
+					<option value="">==请选择科室==</option>
+					<c:forEach items="${depts}" var="dept">
+						<option>${dept.dictName}</option>
+					</c:forEach>
+				</select> <select name="duty" id="duty">
+					<option value="">====请选择勤务====</option>
+					<c:forEach items="${dutys}" var="duty">
+						<option>${duty.dictName}</option>
+					</c:forEach>
+				</select> 
 				<button id="ss" type="submit">搜索</button>
 			</form>
 		</div>

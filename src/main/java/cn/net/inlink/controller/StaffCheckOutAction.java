@@ -85,7 +85,7 @@ public class StaffCheckOutAction {
 	
 	@Transactional(rollbackFor = { RuntimeException.class, Exception.class })
 	public String execute() throws Exception {
-
+		System.out.println("========");
 		 service.staffCheckOut(this.staffCode.trim());
 		 
 		 service.editEmpFlag(this.staffCode.trim());

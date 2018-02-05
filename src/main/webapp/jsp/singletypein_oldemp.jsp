@@ -16,6 +16,33 @@
 <script type="text/javascript" src="js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/ddlr2.js"></script>
+<script type="text/javascript">
+	$(function(){
+	$("#tl").click(function() {
+
+		var empcode = $("#empcode").val();
+		var empname = $("#empname").val();
+		var datetimeEnd = $("#datetimeEnd").val();
+		var dept = $("#dept").val();
+		var duty = $("#duty").val();
+
+		if (empcode == "") {
+
+			alert("请输入员工编号");
+			return false;
+
+		}
+		if (empname == "") {
+
+			alert("请输入员工姓名");
+			return false;
+		}
+		
+		alert("提交成功！");
+	});
+	});
+
+</script>
 <title>已入职录入</title>
 </head>
 <body>
@@ -49,16 +76,16 @@
 						<span>房间号：</span> <input type="text" name="roomCode" id="room">
 					</div>
 					<div>
-						<span>员工编号：</span> <input type="text" name="empCode">
+						<span>员工编号：</span> <input type="text" name="empCode" id="empcode">
 					</div>
 					<div>
-						<span>员工性别：</span> <select name="empGender">
+						<span>员工性别：</span> <select name="empGender" id="gender">
 							<option value="0">男</option>
 							<option value="1">女</option>
 						</select>
 					</div>
 					<div>
-						<span>姓名：</span> <input type="text" name="empName">
+						<span>姓名：</span> <input type="text" name="empName" id="empname">
 					</div>
 					<div>
 						<span>入住日期：</span>  
@@ -76,7 +103,7 @@
 		</script>
 					</div>
 					<div>
-						<span>科室：</span> <select name="dept">
+						<span>科室：</span> <select name="dept" id="dept">
 							<option value="">==请选择科室==</option>
 							<c:forEach items="${depts}" var="dept">
 								<option value="${dept.dictName}">${dept.dictName}</option>
@@ -84,7 +111,7 @@
 						</select>
 					</div>
 					<div>
-						<span>勤务：</span> <select name="duty">
+						<span>勤务：</span> <select name="duty" id="duty">
 							<option value="">=======请选择勤务======</option>
 							<c:forEach items="${dutys}" var="duty">
 								<option value="${duty.dictName}">${duty.dictName}</option>

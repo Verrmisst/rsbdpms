@@ -109,7 +109,8 @@ public class AddNotificationRecordAction {
 
 	@Transactional(rollbackFor = Exception.class)
 	public String execute() {
-
+		
+		
 		// 判断员工是否入住
 		if (dormService.queryStaffByCode(staffCode.trim()) == null) {
 
@@ -125,9 +126,9 @@ public class AddNotificationRecordAction {
 		StaffNotification notifice = new StaffNotification();
 		
 		notifice.setStaff(staff);
-		notifice.setNotificeMoney(money);
+		notifice.setNotificeMoney(money.equals("")?"0":money);
 		notifice.setNotificeReason(reason);
-		notifice.setNotificeTime(this.time==null?new SimpleDateFormat("yyyy/MM/dd").format(new Date()):this.time);
+		notifice.setNotificeTime(this.time.equals("")?new SimpleDateFormat("yyyy/MM/dd").format(new Date()):this.time);
 		notifice.setNotificeType(type);
 		
 		//注入值

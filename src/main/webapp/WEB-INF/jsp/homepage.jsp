@@ -36,7 +36,8 @@
 			return false;
 		}
 		
-		$.get("saveborrow",{staffCode:staffcode,staffName:staffname,objectName:objectname,beginDate:datetimeEnd},
+		
+		$.post("saveborrow",{staffCode:staffcode,staffName:staffname,objectName:objectname,beginDate:datetimeEnd},
 				function(data){
 					alert(data.text);
 					window.location.reload();
@@ -75,7 +76,7 @@
 			return false;
 		}
 		
-		$.get("savenotification",{staffCode:code,type:type,time:time,reason:reason,money:money},
+		$.post("savenotification",{staffCode:code,type:type,time:time,reason:reason,money:money},
 				function(data){
 							
 							alert(data.text);
@@ -107,9 +108,6 @@
 					<div class="inp">
 						<div>
 							<span>员工编号：</span> <input type="text" name="staffCode" id="staffcode">
-						</div>
-						<div>
-							<span>姓名：</span> <input type="text" name="staffName" id="staffname">
 						</div>
 						<div>
 							<span>借用物品：</span> <input type="text" name="objectName" id="objectname">

@@ -1,25 +1,26 @@
 $(document).ready(function(){
 	$("#typein").submit(function(){
-		var fjh=$("#dl input")[0].value;
-		var ygbh=$("#dl input")[1].value;
-		var xm=$("#dl input")[2].value;
-		var sj=$("#dl input")[3].value;
-		if(fjh==""){
-			alert("请输入房间号！");
+		
+		var empcode = $("#empcode").val();
+		var empname = $("#empname").val();
+		var datetimeEnd = $("#datetimeEnd").val();
+
+		if (empcode == "") {
+
+			alert("请输入员工编号");
+			return false;
+
+		}
+		if (empname == "") {
+
+			alert("请输入员工姓名");
 			return false;
 		}
-		if(ygbh==""){
-			alert("请输入员工编号！");
+		if (datetimeEnd == "") {
+
+			alert("请输入入住时间");
 			return false;
 		}
-		if(xm==""){
-			alert("请输入姓名！");
-			return false;
-		}
-		/*if(sj==""){
-			alert("时间不能为空！");
-			return false;
-		}*/
 		alert("提交成功！");
 	});
 	
